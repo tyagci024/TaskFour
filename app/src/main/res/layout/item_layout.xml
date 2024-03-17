@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/textlines"
+        android:paddingLeft="8dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            ></ImageView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:paddingLeft="5dp"
+            >
+            <TextView
+                android:text="Name"
+                android:id="@+id/nameid"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:id="@+id/currencyid"
+                android:text="Currency">
+
+            </TextView>
+
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
