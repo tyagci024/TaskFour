@@ -9,8 +9,8 @@ import com.example.taskfour.service.CryptoApi
 import com.example.taskfour.service.CryptoApiService
 import kotlinx.coroutines.launch
 
-class ListViewModel(): ViewModel() {
-    private val cryptoApiService= CryptoApiService()
+class ListViewModel() : ViewModel() {
+    private val cryptoApiService = CryptoApiService()
 
     private val cryptoList = MutableLiveData<List<CryptoModel>>()
     val cryptoListObs: LiveData<List<CryptoModel>>
@@ -25,6 +25,7 @@ class ListViewModel(): ViewModel() {
     init {
         fetchData()
     }
+
     private fun fetchData() {
         viewModelScope.launch {
             loading.value = true
@@ -39,3 +40,4 @@ class ListViewModel(): ViewModel() {
         }
     }
 }
+

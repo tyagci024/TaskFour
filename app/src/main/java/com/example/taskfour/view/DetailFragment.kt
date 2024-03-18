@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.navArgs
 import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
+import com.example.taskfour.utilies.downloadFromURL
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
@@ -25,6 +26,8 @@ class DetailFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_detail , container, false)
         binding.coin=args.currentCoin
+
+        //binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
 
         return binding.root
     }
