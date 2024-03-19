@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.taskfour.R
 import com.example.taskfour.adapter.Adapter
 import com.example.taskfour.databinding.FragmentListBinding
 import com.example.taskfour.model.CryptoModel
@@ -57,6 +57,44 @@ class ListFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+        // Alt gezinme çubuğunun tıklama olaylarını işleme
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_all -> {
+                    // "Hepsi" tıklandığında yapılacak işlemler
+                    viewModel.cryptoListObs.observe(viewLifecycleOwner) {
+                        it?.let {
+                            originalList = it
+                            adapterCoin = Adapter(it)
+                            binding.recyclerViewCrypto.adapter = adapterCoin
+                            adapterCoin.onItemClickListener = { cryptoModel ->
+                                val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                                findNavController().navigate(action)
+                                viewModel.logAllCryptos()
+                            }
+                        }
+                    }
+                    true
+                }
+                R.id.navigation_favorites -> {
+                    // "Favoriler" tıklandığında yapılacak işlemler
+                    viewModel.readAllData.observe(viewLifecycleOwner) {
+                        it?.let {
+                            originalList = it
+                            adapterCoin = Adapter(it)
+                            binding.recyclerViewCrypto.adapter = adapterCoin
+                            adapterCoin.onItemClickListener = { cryptoModel ->
+                                val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                                findNavController().navigate(action)
+                                viewModel.logAllCryptos()
+                            }
+                        }
+                    }
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     fun liveDataObserver(){
@@ -68,6 +106,7 @@ class ListFragment : Fragment() {
                 adapterCoin.onItemClickListener = { cryptoModel ->
                     val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
                     findNavController().navigate(action)
+                    viewModel.logAllCryptos()
                 }
             }
         }
