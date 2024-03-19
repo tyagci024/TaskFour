@@ -7,7 +7,7 @@ import com.example.taskfour.databinding.ItemLayoutBinding
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.utilies.downloadFromURL
 
-class Adapter(private val cryptoList: List<CryptoModel>) :
+class Adapter(private var cryptoList: List<CryptoModel>) :
     RecyclerView.Adapter<Adapter.CryptoListViewHolder>() {
     var onItemClickListener: ((CryptoModel) -> Unit)? = null
 
@@ -30,10 +30,15 @@ class Adapter(private val cryptoList: List<CryptoModel>) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(coin: CryptoModel) {
             binding.apply {
-                nameid.text = coin.name
-                currencyid.text = coin.currentPrice.toString()
+                textviewName.text = coin.name
+                textViewCurrency.text = coin.currentPrice.toString()
                 imageviewCoin.downloadFromURL(coin.image)
             }
         }
+    }
+
+    fun updateList(newList: List<CryptoModel>) {
+        cryptoList = newList
+        notifyDataSetChanged()
     }
 }
