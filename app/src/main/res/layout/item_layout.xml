@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="@drawable/textlines"
@@ -12,34 +14,53 @@
             android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher"
             />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:paddingLeft="5dp"
-            >
-            <TextView
-                android:text="Name"
-                android:id="@+id/nameid"
-                android:textStyle="bold"
-                android:textSize="18dp"
-                android:padding="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
 
-            </TextView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/dp_8"
+        android:paddingLeft="5dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
+                android:id="@+id/textviewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:id="@+id/currencyid"
-                android:text="Currency">
+                android:text="Name"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="33dp" />
 
-            </TextView>
-
-
+            <TextView
+                android:id="@+id/textViewCurrency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Currency"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="67dp" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewFavIcon"
+            android:layout_width="@dimen/dp_24"
+            android:layout_height="@dimen/dp_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/star" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
