@@ -3,9 +3,9 @@
     <item
         android:id="@+id/navigation_all"
         android:title="Hepsi"
-        android:icon="@drawable/items" />
+         />
     <item
         android:id="@+id/navigation_favorites"
         android:title="Favoriler"
-        android:icon="@drawable/starWhite" />
+        />
 </menu>
