@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.taskfour.databinding.ItemLayoutBinding
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.utilies.downloadFromURL
+import com.example.taskfour.viewModel.ListViewModel
 
 class Adapter(private var cryptoList: List<CryptoModel>) :
     RecyclerView.Adapter<Adapter.CryptoListViewHolder>() {
@@ -22,11 +23,11 @@ class Adapter(private var cryptoList: List<CryptoModel>) :
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(crypto)
         }
-    }
+           }
 
     override fun getItemCount() = cryptoList.size
 
-    class CryptoListViewHolder(private val binding: ItemLayoutBinding) :
+    class CryptoListViewHolder( val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(coin: CryptoModel) {
             binding.apply {

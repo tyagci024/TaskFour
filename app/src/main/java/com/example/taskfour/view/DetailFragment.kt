@@ -25,25 +25,29 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
+    ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         with(binding){
-            textViewCoinName.text=args.currentCoin.name
-            textViewCoinSymbol.text=args.currentCoin.symbol
-            textViewPrice.text=args.currentCoin.currentPrice.toString()
-            textViewHigh24h.text=args.currentCoin.high24h.toString()
+            textViewCoinName.text = args.currentCoin.name
+            textViewCoinSymbol.text = args.currentCoin.symbol
+            textViewPrice.text = args.currentCoin.currentPrice.toString()
+            textViewHigh24h.text = args.currentCoin.high24h.toString()
+            textViewLow24h.text = args.currentCoin.low24h.toString()
+            textViewLastUpdated.text = args.currentCoin.lastUpdated
         }
         binding.imageViewFavIcon.setOnClickListener {
             viewModel.insertCrypto(args.currentCoin)
             viewModel.readAllData.observe(viewLifecycleOwner, Observer { cryptos ->
-                // Log the items stored in the database
                 cryptos.forEach { crypto ->
                     Log.d("CryptoItem", "ID: ${crypto.id}, Name: ${crypto.name}, Symbol: ${crypto.symbol}")
                 }
             })
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
-
-        return binding.root
     }
 }
