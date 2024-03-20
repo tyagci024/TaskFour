@@ -8,5 +8,6 @@
     <string name="price_header">Current Price</string>
     <string name="high_24h_header">High 24h</string>
     <string name="low_24h_header">Low 24h</string>
+    <string name="search_edit">Search</string>
     <string name="last_updated_header">Last Updated</string>
 </resources>

@@ -25,10 +25,9 @@ abstract class CryptoDatabase : RoomDatabase() {
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            // Migration logic for new database version
                         }
                     })
-                    .fallbackToDestructiveMigration() // Bu satırı ekleyin
+                    .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
