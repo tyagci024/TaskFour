@@ -6,12 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
-import com.example.taskfour.BR
-import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
 import com.example.taskfour.utilies.downloadFromURL
 import com.example.taskfour.viewModel.ListViewModel
@@ -25,7 +22,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View {
+    ): View? {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,12 +30,12 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
-            textViewCoinName.text = args.currentCoin.name
-            textViewCoinSymbol.text = args.currentCoin.symbol
-            textViewPrice.text = args.currentCoin.currentPrice.toString()
-            textViewHigh24h.text = args.currentCoin.high24h.toString()
-            textViewLow24h.text = args.currentCoin.low24h.toString()
-            textViewLastUpdated.text = args.currentCoin.lastUpdated
+            textViewCoinName.text=args.currentCoin.name
+            textViewCoinSymbol.text=args.currentCoin.symbol
+            textViewPrice.text=args.currentCoin.currentPrice.toString()
+            textViewHigh24h.text=args.currentCoin.high24h.toString()
+            textViewLow24h.text=args.currentCoin.low24h.toString()
+            textViewLastUpdated.text=args.currentCoin.lastUpdated
         }
         binding.imageViewFavIcon.setOnClickListener {
             viewModel.insertCrypto(args.currentCoin)
