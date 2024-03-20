@@ -22,9 +22,6 @@ class ListFragment : Fragment() {
     private lateinit var adapterCoin: Adapter
     private lateinit var binding: FragmentListBinding
     private lateinit var originalList: List<CryptoModel>
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,7 +41,7 @@ class ListFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val searchText = s.toString().toLowerCase(Locale.getDefault())
+                val searchText = s.toString().lowercase(Locale.getDefault())
                 if (::originalList.isInitialized) {
                     val filteredList = originalList.filter {
                         it.name.toLowerCase(Locale.getDefault()).contains(searchText)
@@ -68,7 +65,6 @@ class ListFragment : Fragment() {
                             adapterCoin.onItemClickListener = { cryptoModel ->
                                 val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
                                 findNavController().navigate(action)
-                                viewModel.logAllCryptos()
                             }
                         }
                     }
@@ -84,7 +80,6 @@ class ListFragment : Fragment() {
                             adapterCoin.onItemClickListener = { cryptoModel ->
                                 val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
                                 findNavController().navigate(action)
-                                viewModel.logAllCryptos()
                             }
                         }
                     }
@@ -104,7 +99,6 @@ class ListFragment : Fragment() {
                 adapterCoin.onItemClickListener = { cryptoModel ->
                     val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
                     findNavController().navigate(action)
-                    viewModel.logAllCryptos()
                 }
             }
         }
@@ -114,6 +108,22 @@ class ListFragment : Fragment() {
                     progressBar.visibility = View.VISIBLE
                     recyclerViewCrypto.visibility = View.GONE
                     textviewError.visibility = View.GONE
+                }
+            }
+            else {
+                with(binding){
+                    progressBar.visibility = View.GONE
+                    recyclerViewCrypto.visibility = View.VISIBLE
+                    textviewError.visibility = View.GONE
+                }
+            }
+        }
+        viewModel.errorObs.observe(viewLifecycleOwner) {
+            if (it) {
+                with(binding){
+                    progressBar.visibility = View.GONE
+                    recyclerViewCrypto.visibility = View.GONE
+                    textviewError.visibility = View.VISIBLE
                 }
             }
             else {
