@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 @Entity(tableName = "crypto_table")
 data class CryptoModel(
-    @PrimaryKey val id: String,
+    @PrimaryKey(autoGenerate = true) val coinId: Int,
     @SerializedName("symbol") val symbol: String,
     @SerializedName("name") val name: String,
     @SerializedName("image") val image: String,
@@ -17,4 +17,4 @@ data class CryptoModel(
     @SerializedName("low_24h") val low24h: Double,
     @SerializedName("last_updated") val lastUpdated: String,
     @SerializedName("current_price") val currentPrice: Double,
-    var isFavorite: Boolean = false ) : Parcelable
+    var fav: Boolean= false) : Parcelable

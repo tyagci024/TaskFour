@@ -14,5 +14,8 @@ class CryptoRepository(private val cryptoDao: CryptoDao) {
     suspend fun updateCrypto(crypto: CryptoModel) {
         cryptoDao.updateCrypto(crypto)
     }
+    suspend fun deleteBySymbol(symbol: String){
+        cryptoDao.deleteCryptoBySymbol(symbol)
+    }
 
 }

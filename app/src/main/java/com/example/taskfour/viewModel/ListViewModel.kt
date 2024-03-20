@@ -39,6 +39,11 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
             repostory.insertCrypto(crypto)
         }
     }
+    fun deleteCrypto(symbol:String){
+        viewModelScope.launch {
+            repostory.deleteBySymbol(symbol)
+        }
+    }
 
     private fun fetchData() {
         viewModelScope.launch {

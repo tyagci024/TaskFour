@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
 import com.example.taskfour.utilies.downloadFromURL
 import com.example.taskfour.viewModel.ListViewModel
@@ -37,13 +38,25 @@ class DetailFragment : Fragment() {
             textViewLow24h.text=args.currentCoin.low24h.toString()
             textViewLastUpdated.text=args.currentCoin.lastUpdated
         }
-        binding.imageViewFavIcon.setOnClickListener {
-            viewModel.insertCrypto(args.currentCoin)
-            viewModel.readAllData.observe(viewLifecycleOwner, Observer { cryptos ->
-                cryptos.forEach { crypto ->
-                    Log.d("CryptoItem", "ID: ${crypto.id}, Name: ${crypto.name}, Symbol: ${crypto.symbol}")
-                }
-            })
+        if (args.currentCoin.fav==true){
+            binding.imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
+            binding.imageViewFavIcon.setOnClickListener {
+                args.currentCoin.fav=false
+                viewModel.deleteCrypto(args.currentCoin.symbol)
+            }
+                  }
+        else{
+            binding.imageViewFavIcon.setOnClickListener {
+                viewModel.insertCrypto(args.currentCoin)
+                args.currentCoin.fav= true
+                viewModel.readAllData.observe(viewLifecycleOwner, Observer { cryptos ->
+                    cryptos.forEach { crypto ->
+                        Log.d("CryptoItem", "ID: ${crypto.coinId}, Name: ${crypto.name}, Symbol: ${crypto.symbol}")
+                    }
+                })
+            }
+            binding.imageViewFavIcon.setImageResource(R.drawable.star)
+
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
     }
