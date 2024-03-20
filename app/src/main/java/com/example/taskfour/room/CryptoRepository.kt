@@ -5,7 +5,14 @@ import com.example.taskfour.model.CryptoModel
 
 class CryptoRepository(private val cryptoDao: CryptoDao) {
     val readAllData: LiveData<List<CryptoModel>> = cryptoDao.getAllCryptos()
-     suspend fun insertCrypto(crypto: CryptoModel) {
+    suspend fun insertCrypto(crypto: CryptoModel) {
         cryptoDao.insertCrypto(crypto)
     }
+    suspend fun getCryptoBySymbol(symbol: String): CryptoModel? {
+        return cryptoDao.getCryptoBySymbol(symbol)
+    }
+    suspend fun updateCrypto(crypto: CryptoModel) {
+        cryptoDao.updateCrypto(crypto)
+    }
+
 }
