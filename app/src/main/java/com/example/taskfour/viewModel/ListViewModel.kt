@@ -1,17 +1,13 @@
 package com.example.taskfour.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
-import com.example.taskfour.room.CryptoDao
 import com.example.taskfour.room.CryptoDatabase
 import com.example.taskfour.room.CryptoRepository
-import com.example.taskfour.service.CryptoApi
 import com.example.taskfour.service.CryptoApiService
 import kotlinx.coroutines.launch
 
@@ -27,8 +23,8 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     private val loading = MutableLiveData<Boolean>()
     val loadingObs: LiveData<Boolean>
         get() = loading
-    private val error = MutableLiveData<String>()
-    val errorObs: LiveData<String>
+    private val error = MutableLiveData<Boolean>()
+    val errorObs: LiveData<Boolean>
         get() = error
 
     init {
@@ -37,6 +33,7 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         repostory = CryptoRepository(cryptoDao)
         readAllData = cryptoDao.getAllCryptos()
     }
+
     fun insertCrypto(crypto: CryptoModel) {
         viewModelScope.launch {
             repostory.insertCrypto(crypto)
@@ -48,22 +45,24 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
             loading.value = true
             try {
                 val result = cryptoApiService.getCoin()
+                result.forEach { crypto ->
+                    updateIfExist(crypto)
+                }
                 cryptoList.value = result
-                error.value = ""
+                error.value = false
             } catch (e: Exception) {
-                error.value = "Error: ${e.message}"
+                error.value = true
             }
             loading.value = false
         }
     }
-    fun logAllCryptos() {
+
+    private fun updateIfExist(crypto: CryptoModel) {//burda roomdaki verileri güncellemeye çalışaıyoruz
         viewModelScope.launch {
-            val cryptos = readAllData
-            cryptos.value?.forEach {
-                Log.d("CryptoLog", it.name) // Ya da başka bir log işlemi
+            val existingCrypto = repostory.getCryptoBySymbol(crypto.symbol)
+            existingCrypto?.let {
+                repostory.updateCrypto(crypto)
             }
         }
     }
 }
-
-
