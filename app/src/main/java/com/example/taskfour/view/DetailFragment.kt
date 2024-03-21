@@ -32,31 +32,27 @@ class DetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
             textViewCoinName.text=args.currentCoin.name
-            textViewCoinSymbol.text=args.currentCoin.symbol
-            textViewPrice.text=args.currentCoin.currentPrice.toString()
+            textViewCoinSymbol.text=args.currentCoin.symbol.uppercase()
+            textViewPrice.text="$ "+args.currentCoin.currentPrice.toString()
             textViewHigh24h.text=args.currentCoin.high24h.toString()
             textViewLow24h.text=args.currentCoin.low24h.toString()
-            textViewLastUpdated.text=args.currentCoin.lastUpdated
-        }
-        if (args.currentCoin.fav==true){
-            binding.imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
-            binding.imageViewFavIcon.setOnClickListener {
-                args.currentCoin.fav=false
-                viewModel.deleteCrypto(args.currentCoin.symbol)
-            }
-                  }
-        else{
-            binding.imageViewFavIcon.setOnClickListener {
-                viewModel.insertCrypto(args.currentCoin)
-                args.currentCoin.fav= true
-                viewModel.readAllData.observe(viewLifecycleOwner, Observer { cryptos ->
-                    cryptos.forEach { crypto ->
-                        Log.d("CryptoItem", "ID: ${crypto.coinId}, Name: ${crypto.name}, Symbol: ${crypto.symbol}")
-                    }
-                })
-            }
-            binding.imageViewFavIcon.setImageResource(R.drawable.star)
+            viewModel.isSymbolInDatabase(args.currentCoin.symbol).observe(viewLifecycleOwner) { isSymbolInDatabase ->
+                if (isSymbolInDatabase) {
+                    args.currentCoin.fav=true
+                    Log.d("symbol","${isSymbolInDatabase}")
+                    imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
+                    imageViewFavIcon.setOnClickListener {
+                        viewModel.deleteCrypto(args.currentCoin.symbol)
+                        args.currentCoin.fav=false
 
+                    }
+                } else {
+
+                    imageViewFavIcon.setImageResource(R.drawable.star)
+                    imageViewFavIcon.setOnClickListener {
+                        viewModel.insertCrypto(args.currentCoin)
+                    }                }
+            }
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
     }
