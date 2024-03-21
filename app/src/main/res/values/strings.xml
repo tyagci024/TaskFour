@@ -5,7 +5,7 @@
     <string name="coin_name">Bitcoin</string>
     <string name="error_text">error</string>
     <string name="coin_symbol">Symbol</string>
-    <string name="price_header">Current Price</string>
+    <string name="price_header">543865</string>
     <string name="high_24h_header">High 24h</string>
     <string name="low_24h_header">Low 24h</string>
     <string name="search_edit">Search</string>
