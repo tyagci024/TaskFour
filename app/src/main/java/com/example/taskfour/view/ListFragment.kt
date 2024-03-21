@@ -33,18 +33,29 @@ class ListFragment : Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(
+        view: View,
+        savedInstanceState: Bundle?,
+    ) {
         super.onViewCreated(view, savedInstanceState)
         liveDataObserver()
         binding.searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,) {
             }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int) {
                 val searchText = s.toString().lowercase(Locale.getDefault())
                 if (::originalList.isInitialized) {
                     val filteredList = originalList.filter {
-                        it.name.toLowerCase(Locale.getDefault()).contains(searchText)
+                        it.name.lowercase(Locale.getDefault()).contains(searchText)
                     }
                     adapterCoin.updateList(filteredList)
                 }
@@ -63,13 +74,16 @@ class ListFragment : Fragment() {
                             adapterCoin = Adapter(it)
                             binding.recyclerViewCrypto.adapter = adapterCoin
                             adapterCoin.onItemClickListener = { cryptoModel ->
-                                val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                                val action =
+                                    ListFragmentDirections.actionListFragmentToDetailFragment(
+                                        cryptoModel)
                                 findNavController().navigate(action)
                             }
                         }
                     }
                     true
                 }
+
                 R.id.navigation_favorites -> {
                     // "Favoriler" tıklandığında yapılacak işlemler
                     viewModel.readAllData.observe(viewLifecycleOwner) {
@@ -78,40 +92,43 @@ class ListFragment : Fragment() {
                             adapterCoin = Adapter(it)
                             binding.recyclerViewCrypto.adapter = adapterCoin
                             adapterCoin.onItemClickListener = { cryptoModel ->
-                                val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                                val action =
+                                    ListFragmentDirections.actionListFragmentToDetailFragment(
+                                        cryptoModel)
                                 findNavController().navigate(action)
                             }
                         }
                     }
                     true
                 }
+
                 else -> false
             }
         }
     }
 
-    fun liveDataObserver(){
+    fun liveDataObserver() {
         viewModel.cryptoListObs.observe(viewLifecycleOwner) {
             it?.let {
                 originalList = it
                 adapterCoin = Adapter(it)
                 binding.recyclerViewCrypto.adapter = adapterCoin
                 adapterCoin.onItemClickListener = { cryptoModel ->
-                    val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                    val action =
+                        ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
                     findNavController().navigate(action)
                 }
             }
         }
         viewModel.loadingObs.observe(viewLifecycleOwner) {
             if (it) {
-                with(binding){
+                with(binding) {
                     progressBar.visibility = View.VISIBLE
                     recyclerViewCrypto.visibility = View.GONE
                     textviewError.visibility = View.GONE
                 }
-            }
-            else {
-                with(binding){
+            } else {
+                with(binding) {
                     progressBar.visibility = View.GONE
                     recyclerViewCrypto.visibility = View.VISIBLE
                     textviewError.visibility = View.GONE
@@ -120,14 +137,13 @@ class ListFragment : Fragment() {
         }
         viewModel.errorObs.observe(viewLifecycleOwner) {
             if (it) {
-                with(binding){
+                with(binding) {
                     progressBar.visibility = View.GONE
                     recyclerViewCrypto.visibility = View.GONE
                     textviewError.visibility = View.VISIBLE
                 }
-            }
-            else {
-                with(binding){
+            } else {
+                with(binding) {
                     progressBar.visibility = View.GONE
                     recyclerViewCrypto.visibility = View.VISIBLE
                     textviewError.visibility = View.GONE
