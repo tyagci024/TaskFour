@@ -15,7 +15,10 @@ interface CryptoDao {
     @Query("SELECT * FROM crypto_table")
     fun getAllCryptos(): LiveData<List<CryptoModel>>
 
-    @Update
+    @Query("SELECT * FROM crypto_table")
+    suspend fun getAllCrypto(): List<CryptoModel>
+
+@Update
     suspend fun updateCrypto(crypto: CryptoModel)
 
     @Query("DELETE FROM crypto_table WHERE symbol = :symbol")
@@ -25,5 +28,8 @@ interface CryptoDao {
     suspend fun deleteAllCryptos()
 
     @Query("SELECT * FROM crypto_table WHERE symbol = :symbol")
-    suspend fun getCryptoBySymbol(symbol: String): CryptoModel?
+    fun getCryptoBySymbol(symbol: String): LiveData<CryptoModel?>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM crypto_table WHERE symbol = :symbol LIMIT 1)")
+    fun isSymbolInDatabase(symbol: String): LiveData<Boolean>
 }
