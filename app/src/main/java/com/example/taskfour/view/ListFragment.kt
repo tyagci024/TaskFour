@@ -39,6 +39,10 @@ class ListFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         liveDataObserver()
+        binding.swipeRefreshLay.setOnRefreshListener {
+            viewModel.fetchData()
+            binding.swipeRefreshLay.isRefreshing = false
+        }
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
