@@ -1,6 +1,7 @@
 package com.example.taskfour.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,27 +32,21 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         fetchData()
         val cryptoDao = CryptoDatabase.getDatabase(application).cryptoDao()
         repostory = CryptoRepository(cryptoDao)
-        readAllData = cryptoDao.getAllCryptos()
+        readAllData = repostory.readAllData
     }
-
-    fun insertCrypto(crypto: CryptoModel) {
-        viewModelScope.launch {
-            repostory.insertCrypto(crypto)
-        }
-    }
-    fun deleteCrypto(symbol:String){
-        viewModelScope.launch {
-            repostory.deleteBySymbol(symbol)
-        }
-    }
-
     private fun fetchData() {
         viewModelScope.launch {
             loading.value = true
             try {
                 val result = cryptoApiService.getCoin()
-                result.forEach { crypto ->
-                    updateIfExist(crypto)
+                val allCrypto = repostory.getAllCrypto()
+                for (apiCrypto in result) {
+                    for (roomCrypto in allCrypto) {
+                        if (apiCrypto.symbol == roomCrypto.symbol) {
+                            repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
+                            break
+                        }
+                    }
                 }
                 cryptoList.value = result
                 error.value = false
@@ -62,12 +57,13 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    private fun updateIfExist(crypto: CryptoModel) {//burda roomdaki verileri güncellemeye çalışaıyoruz
-        viewModelScope.launch {
-            val existingCrypto = repostory.getCryptoBySymbol(crypto.symbol)
+  /* private fun updateIfExist(crypto: CryptoModel) { // burda roomdaki verileri güncellemeye çalışaıyoruz
+        repostory.getCryptoBySymbol(crypto.symbol).observeForever { existingCrypto ->
             existingCrypto?.let {
-                repostory.updateCrypto(crypto)
+                viewModelScope.launch {
+                    repostory.updateCrypto(crypto)
+                }
             }
         }
-    }
+    }*/
 }

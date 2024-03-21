@@ -12,12 +12,13 @@ import androidx.navigation.fragment.navArgs
 import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
 import com.example.taskfour.utilies.downloadFromURL
+import com.example.taskfour.viewModel.DetailViewModel
 import com.example.taskfour.viewModel.ListViewModel
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val args by navArgs<DetailFragmentArgs>()
-    private val viewModel: ListViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,28 +32,40 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
-            textViewCoinName.text=args.currentCoin.name
-            textViewCoinSymbol.text=args.currentCoin.symbol.uppercase()
-            textViewPrice.text="$ "+args.currentCoin.currentPrice.toString()
-            textViewHigh24h.text=args.currentCoin.high24h.toString()
-            textViewLow24h.text=args.currentCoin.low24h.toString()
+            textViewCoinName.text = args.currentCoin.name
+            textViewCoinSymbol.text = args.currentCoin.symbol.uppercase()
+            textViewPrice.text = StringBuilder().append("$").append(args.currentCoin.currentPrice).toString()
+            textViewHigh24h.text = args.currentCoin.high24h.toString()
+            textViewLow24h.text = args.currentCoin.low24h.toString()
             viewModel.isSymbolInDatabase(args.currentCoin.symbol).observe(viewLifecycleOwner) { isSymbolInDatabase ->
                 if (isSymbolInDatabase) {
-                    args.currentCoin.fav=true
-                    Log.d("symbol","${isSymbolInDatabase}")
                     imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
                     imageViewFavIcon.setOnClickListener {
                         viewModel.deleteCrypto(args.currentCoin.symbol)
-                        args.currentCoin.fav=false
-
                     }
                 } else {
-
                     imageViewFavIcon.setImageResource(R.drawable.star)
                     imageViewFavIcon.setOnClickListener {
                         viewModel.insertCrypto(args.currentCoin)
-                    }                }
+                    }
+                }
             }
+           /* imageViewFavIcon.setOnClickListener {
+                if (args.currentCoin.fav == true) {
+                    imageViewFavIcon.setImageResource(R.drawable.star)
+                    args.currentCoin.fav = false
+                    viewModel.deleteCrypto(args.currentCoin.symbol)
+                } else {
+                    imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
+                    args.currentCoin.fav = true
+                    viewModel.insertCrypto(args.currentCoin)
+                    viewModel.readAllData.observe(viewLifecycleOwner, Observer { cryptos ->
+                        cryptos.forEach { crypto ->
+                            Log.d("CryptoItem", "ID: ${crypto.coinId}, Name: ${crypto.name}, Symbol: ${crypto.symbol}")
+                        }
+                    })
+                }
+            }*/
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
     }
