@@ -1,7 +1,7 @@
 package com.example.taskfour.viewModel
 
 import android.app.Application
-import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -34,20 +34,22 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         repostory = CryptoRepository(cryptoDao)
         readAllData = repostory.readAllData
     }
-    private fun fetchData() {
+    fun fetchData() {
         viewModelScope.launch {
             loading.value = true
             try {
                 val result = cryptoApiService.getCoin()
-                val allCrypto = repostory.getAllCrypto()
-                for (apiCrypto in result) {
-                    for (roomCrypto in allCrypto) {
-                        if (apiCrypto.symbol == roomCrypto.symbol) {
-                            repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
-                            break
-                        }
-                    }
-                }
+                Toast.makeText(getApplication(),"Coins From API",Toast.LENGTH_LONG).show()
+
+                /*  val allCrypto = repostory.getAllCrypto()
+                  for (apiCrypto in result) {
+                      for (roomCrypto in allCrypto) {
+                          if (apiCrypto.symbol == roomCrypto.symbol) {
+                              repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
+                              break
+                          }
+                      }
+                  }*/
                 cryptoList.value = result
                 error.value = false
             } catch (e: Exception) {
