@@ -38,18 +38,19 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         viewModelScope.launch {
             loading.value = true
             try {
-                val result = cryptoApiService.getCoin()
-                Toast.makeText(getApplication(),"Coins From API",Toast.LENGTH_LONG).show()
+                val result = cryptoApiService.getCoinList()
 
-                /*  val allCrypto = repostory.getAllCrypto()
+                val allCrypto = repostory.getAllCrypto()
+
                   for (apiCrypto in result) {
                       for (roomCrypto in allCrypto) {
                           if (apiCrypto.symbol == roomCrypto.symbol) {
+                              apiCrypto.coinId = roomCrypto.coinId
                               repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
                               break
                           }
                       }
-                  }*/
+                  }
                 cryptoList.value = result
                 error.value = false
             } catch (e: Exception) {
@@ -59,13 +60,4 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-  /* private fun updateIfExist(crypto: CryptoModel) { // burda roomdaki verileri güncellemeye çalışaıyoruz
-        repostory.getCryptoBySymbol(crypto.symbol).observeForever { existingCrypto ->
-            existingCrypto?.let {
-                viewModelScope.launch {
-                    repostory.updateCrypto(crypto)
-                }
-            }
-        }
-    }*/
 }
