@@ -16,7 +16,7 @@ class CryptoApiService {
         .build()
         .create(CryptoApi::class.java)
 
-    suspend fun getCoin(): List<CryptoModel> {
+    suspend fun getCoinList(): List<CryptoModel> {// list isim
         return api.getList()
     }
 }
