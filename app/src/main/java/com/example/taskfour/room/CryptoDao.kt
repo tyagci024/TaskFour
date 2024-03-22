@@ -3,6 +3,7 @@ package com.example.taskfour.room
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.taskfour.model.CryptoModel
@@ -18,7 +19,7 @@ interface CryptoDao {
     @Query("SELECT * FROM crypto_table")
     suspend fun getAllCrypto(): List<CryptoModel>
 
-@Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCrypto(crypto: CryptoModel)
 
     @Query("DELETE FROM crypto_table WHERE symbol = :symbol")
