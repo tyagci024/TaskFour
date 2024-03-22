@@ -50,22 +50,6 @@ class DetailFragment : Fragment() {
                     }
                 }
             }
-           /* imageViewFavIcon.setOnClickListener {
-                if (args.currentCoin.fav == true) {
-                    imageViewFavIcon.setImageResource(R.drawable.star)
-                    args.currentCoin.fav = false
-                    viewModel.deleteCrypto(args.currentCoin.symbol)
-                } else {
-                    imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
-                    args.currentCoin.fav = true
-                    viewModel.insertCrypto(args.currentCoin)
-                    viewModel.readAllData.observe(viewLifecycleOwner, Observer { cryptos ->
-                        cryptos.forEach { crypto ->
-                            Log.d("CryptoItem", "ID: ${crypto.coinId}, Name: ${crypto.name}, Symbol: ${crypto.symbol}")
-                        }
-                    })
-                }
-            }*/
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
     }
