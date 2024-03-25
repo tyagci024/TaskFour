@@ -36,6 +36,4 @@
         android:textColor="#888888"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Diğer veri alanları buraya eklenebilir -->
-
 </LinearLayout>
