@@ -1,24 +1,26 @@
 package com.example.taskfour.viewModel
 
 import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
+import com.example.taskfour.model.NewsItem
 import com.example.taskfour.room.CryptoDatabase
 import com.example.taskfour.room.CryptoRepository
 import com.example.taskfour.service.CryptoApiService
+import com.example.taskfour.service.NewsApiService
 import kotlinx.coroutines.launch
 
-class ListViewModel(application: Application) : AndroidViewModel(application) {
+class CoinListViewModel(application: Application) : AndroidViewModel(application) {
     var readAllData: LiveData<List<CryptoModel>>
     var repostory: CryptoRepository
 
     private val cryptoApiService = CryptoApiService()
 
     private val cryptoList = MutableLiveData<List<CryptoModel>>()
+
     val cryptoListObs: LiveData<List<CryptoModel>>
         get() = cryptoList
     private val loading = MutableLiveData<Boolean>()
@@ -39,18 +41,15 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
             loading.value = true
             try {
                 val result = cryptoApiService.getCoinList()
-
                 val allCrypto = repostory.getAllCrypto()
 
-                  for (apiCrypto in result) {
-                      for (roomCrypto in allCrypto) {
-                          if (apiCrypto.symbol == roomCrypto.symbol) {
-                              apiCrypto.coinId = roomCrypto.coinId
-                              repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
-                              break
-                          }
-                      }
-                  }
+                for (apiCrypto in result) {
+                    val matchingCrypto = allCrypto.find { it.symbol == apiCrypto.symbol }
+                    matchingCrypto?.let {
+                        apiCrypto.coinId = it.coinId
+                        repostory.updateCrypto(apiCrypto)
+                    }
+                }
                 cryptoList.value = result
                 error.value = false
             } catch (e: Exception) {
