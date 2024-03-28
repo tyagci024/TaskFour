@@ -4,13 +4,13 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:padding="@dimen/dp_16"
+        android:layout_height="wrap_content"
         android:background="@drawable/textlines"
-        android:paddingLeft="@dimen/dp_8"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/imageviewCoin"
-            android:layout_width="75dp"
+            android:layout_width="@dimen/dp_75"
             android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher" />
 
@@ -33,9 +33,9 @@
                 android:id="@+id/textviewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/coin_name"
                 android:textSize="@dimen/sp_20"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="@string/coin_name" />
 
             <TextView
                 android:id="@+id/textViewCurrency"
@@ -44,6 +44,15 @@
                 tools:text="@string/price_header" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textViewDailyPerc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="-%3.56" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
