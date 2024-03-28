@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.taskfour.view.ListFragment"
-        android:label="fragment_list"
+        android:label="Coinler"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.example.taskfour.view.DetailFragment"
-        android:label="fragment_detail"
+        android:label="Detaylar"
         tools:layout="@layout/fragment_detail" >
         <action
             android:id="@+id/action_detailFragment_to_listFragment"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/favoritesPageFragment"
         android:name="com.example.taskfour.view.FavoritesPageFragment"
-        android:label="fragment_favorites_page"
+        android:label="Favorilerim"
         tools:layout="@layout/fragment_favorites_page" >
         <action
             android:id="@+id/action_favoritesPageFragment_to_detailFragment"
@@ -38,6 +38,6 @@
     <fragment
         android:id="@+id/newsPageFragment"
         android:name="com.example.taskfour.view.NewsPageFragment"
-        android:label="fragment_news_page"
+        android:label="Haberler"
         tools:layout="@layout/fragment_news_page" />
 </navigation>
