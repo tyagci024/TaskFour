@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskfour.R
 import com.example.taskfour.adapter.Adapter
@@ -23,7 +24,6 @@ import org.json.JSONArray
 
 class ListFragment : Fragment() {
     private val viewModel: CoinListViewModel by viewModels()
-    private val viewModelNews: NewsListViewModel by viewModels()
     private lateinit var adapterCoin: Adapter
     private lateinit var binding: FragmentListBinding
     private lateinit var originalList: List<CryptoModel>
@@ -35,6 +35,7 @@ class ListFragment : Fragment() {
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
         binding.recyclerViewCrypto.layoutManager = LinearLayoutManager(requireContext())
+
         return binding.root
     }
 
@@ -44,86 +45,8 @@ class ListFragment : Fragment() {
     ) {
         super.onViewCreated(view, savedInstanceState)
         liveDataObserver()
-        binding.swipeRefreshLay.setOnRefreshListener {
-            viewModel.fetchData()
-            binding.swipeRefreshLay.isRefreshing = false
-        }
-        binding.searchBar.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(
-                s: CharSequence?,
-                start: Int,
-                count: Int,
-                after: Int,
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence?,
-                start: Int,
-                before: Int,
-                count: Int
-            ) {
-                val searchText = s.toString().lowercase(Locale.getDefault())
-                if (::originalList.isInitialized) {
-                    val filteredList = originalList.filter {
-                        it.name.lowercase(Locale.getDefault()).contains(searchText)
-                    }
-                    adapterCoin.updateList(filteredList)
-                }
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-            }
-        })
-        binding.bottomNavigationView.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_all -> {
-                    // "Hepsi" tıklandığında yapılacak işlemler
-                    viewModel.cryptoListObs.observe(viewLifecycleOwner) {
-                        it?.let {
-                            originalList = it
-                            adapterCoin = Adapter(it)
-                            binding.recyclerViewCrypto.adapter = adapterCoin
-                            adapterCoin.onItemClickListener = { cryptoModel ->
-                                val action =
-                                    ListFragmentDirections.actionListFragmentToDetailFragment(
-                                        cryptoModel
-                                    )
-                                findNavController().navigate(action)
-                            }
-                        }
-                    }
-                    true
-                }
-
-                R.id.navigation_favorites -> {
-                    // "Favoriler" tıklandığında yapılacak işlemler
-                    viewModel.readAllData.observe(viewLifecycleOwner) {
-                        it?.let {
-                            originalList = it
-                            adapterCoin = Adapter(it)
-                            binding.recyclerViewCrypto.adapter = adapterCoin
-                            adapterCoin.onItemClickListener = { cryptoModel ->
-                                val action =
-                                    ListFragmentDirections.actionListFragmentToDetailFragment(
-                                        cryptoModel
-                                    )
-                                findNavController().navigate(action)
-                            }
-                        }
-                    }
-                    true
-                }
-
-                R.id.navigation_news -> {
-                    findNavController().navigate(ListFragmentDirections.actionListFragmentToNewFragment())
-                    true
-                }
-
-                else -> false
-            }
-        }
-        viewModelNews.getDataFromAPi()
+        refreshApiData()
+        setSearchBar()
     }
 
     fun liveDataObserver() {
@@ -168,6 +91,42 @@ class ListFragment : Fragment() {
                     textviewError.visibility = View.GONE
                 }
             }
+        }
+    }
+
+    private fun setSearchBar(){
+        binding.searchBar.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int,
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int,
+            ) {
+                val searchText = s.toString().lowercase(Locale.getDefault())
+                if (::originalList.isInitialized) {
+                    val filteredList = originalList.filter {
+                        it.name.lowercase(Locale.getDefault()).contains(searchText)
+                    }
+                    adapterCoin.updateList(filteredList)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+    private fun refreshApiData(){
+        binding.swipeRefreshLay.setOnRefreshListener {
+            viewModel.fetchData()
+            binding.swipeRefreshLay.isRefreshing = false
         }
     }
 }
