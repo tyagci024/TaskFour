@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:padding="@dimen/dp_16"
-        android:layout_height="wrap_content"
-        android:background="@drawable/textlines"
-        android:orientation="horizontal">
-        <ImageView
-            android:id="@+id/imageviewCoin"
-            android:layout_width="@dimen/dp_75"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_launcher" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/dp_16"
+    android:paddingStart="@dimen/dp_24"
+    android:paddingEnd="@dimen/dp_24">
+
+    <ImageView
+        android:id="@+id/imageviewCoin"
+        android:layout_width="@dimen/dp_75"
+        android:layout_height="match_parent"
+        android:src="@mipmap/ic_launcher" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -56,4 +57,4 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
+</LinearLayout>
