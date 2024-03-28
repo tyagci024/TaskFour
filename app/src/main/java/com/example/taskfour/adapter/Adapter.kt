@@ -2,11 +2,12 @@ package com.example.taskfour.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskfour.R
 import com.example.taskfour.databinding.ItemLayoutBinding
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.utilies.downloadFromURL
-import com.example.taskfour.viewModel.ListViewModel
 
 class Adapter(private var cryptoList: List<CryptoModel>) :
     RecyclerView.Adapter<Adapter.CryptoListViewHolder>() {
@@ -33,7 +34,13 @@ class Adapter(private var cryptoList: List<CryptoModel>) :
             binding.apply {
                 textviewName.text = coin.name
                 textViewCurrency.text = coin.currentPrice.toString()
+                textViewDailyPerc.text=coin.priceChangePercentage24H.toString()
                 imageviewCoin.downloadFromURL(coin.image)
+                if (coin.priceChangePercentage24H > 0) {
+                    textViewDailyPerc.setTextColor(ContextCompat.getColor(itemView.context, R.color.green))
+                } else {
+                    textViewDailyPerc.setTextColor(ContextCompat.getColor(itemView.context, R.color.red))
+                }
             }
         }
     }
