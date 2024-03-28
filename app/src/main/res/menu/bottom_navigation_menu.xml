@@ -8,4 +8,8 @@
         android:id="@+id/navigation_favorites"
         android:title="Favoriler"
         />
+    <item
+        android:id="@+id/navigation_news"
+        android:title="Haberler"
+        />
 </menu>

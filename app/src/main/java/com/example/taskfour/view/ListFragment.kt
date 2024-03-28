@@ -14,11 +14,16 @@ import com.example.taskfour.R
 import com.example.taskfour.adapter.Adapter
 import com.example.taskfour.databinding.FragmentListBinding
 import com.example.taskfour.model.CryptoModel
-import com.example.taskfour.viewModel.ListViewModel
+import com.example.taskfour.viewModel.CoinListViewModel
+import com.example.taskfour.viewModel.NewsListViewModel
 import java.util.Locale
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONArray
 
 class ListFragment : Fragment() {
-    private val viewModel: ListViewModel by viewModels()
+    private val viewModel: CoinListViewModel by viewModels()
+    private val viewModelNews: NewsListViewModel by viewModels()
     private lateinit var adapterCoin: Adapter
     private lateinit var binding: FragmentListBinding
     private lateinit var originalList: List<CryptoModel>
@@ -48,14 +53,16 @@ class ListFragment : Fragment() {
                 s: CharSequence?,
                 start: Int,
                 count: Int,
-                after: Int,) {
+                after: Int,
+            ) {
             }
 
             override fun onTextChanged(
                 s: CharSequence?,
                 start: Int,
                 before: Int,
-                count: Int) {
+                count: Int
+            ) {
                 val searchText = s.toString().lowercase(Locale.getDefault())
                 if (::originalList.isInitialized) {
                     val filteredList = originalList.filter {
@@ -80,7 +87,8 @@ class ListFragment : Fragment() {
                             adapterCoin.onItemClickListener = { cryptoModel ->
                                 val action =
                                     ListFragmentDirections.actionListFragmentToDetailFragment(
-                                        cryptoModel)
+                                        cryptoModel
+                                    )
                                 findNavController().navigate(action)
                             }
                         }
@@ -98,7 +106,8 @@ class ListFragment : Fragment() {
                             adapterCoin.onItemClickListener = { cryptoModel ->
                                 val action =
                                     ListFragmentDirections.actionListFragmentToDetailFragment(
-                                        cryptoModel)
+                                        cryptoModel
+                                    )
                                 findNavController().navigate(action)
                             }
                         }
@@ -106,9 +115,15 @@ class ListFragment : Fragment() {
                     true
                 }
 
+                R.id.navigation_news -> {
+                    findNavController().navigate(ListFragmentDirections.actionListFragmentToNewFragment())
+                    true
+                }
+
                 else -> false
             }
         }
+        viewModelNews.getDataFromAPi()
     }
 
     fun liveDataObserver() {
