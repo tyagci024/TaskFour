@@ -22,9 +22,11 @@ class NewsListViewModel : ViewModel() {
     private val error = MutableLiveData<Boolean>()
     val errorObs: LiveData<Boolean>
         get() = error
-
-
+    init {
+        getDataFromAPi()
+    }
     fun getDataFromAPi() {
+        loading.value=true
         disposable.add(
             apiService.getNewsData()
                 .subscribeOn(Schedulers.newThread())
@@ -33,11 +35,14 @@ class NewsListViewModel : ViewModel() {
                     override fun onSuccess(t: List<NewsItem>) {
                         newsList.value = t
                         Log.d(TAG, "API verileri başarıyla çekildi. Çekilen veri sayısı: ${t.size}")
+                        loading.value=false
+                        error.value=false
                     }
 
                     override fun onError(e: Throwable) {
                         Log.e(TAG, "API verileri çekilirken hata oluştu", e)
-
+                        loading.value = false
+                        error.value=true
                     }
                 }
                 ))
