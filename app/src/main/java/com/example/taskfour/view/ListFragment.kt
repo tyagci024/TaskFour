@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.taskfour.R
 import com.example.taskfour.adapter.Adapter
 import com.example.taskfour.databinding.FragmentListBinding
@@ -35,6 +37,11 @@ class ListFragment : Fragment() {
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
         binding.recyclerViewCrypto.layoutManager = LinearLayoutManager(requireContext())
+        var dividerItemDecoration= DividerItemDecoration(requireContext(),RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable,null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.recyclerViewCrypto.addItemDecoration(dividerItemDecoration)
 
         return binding.root
     }
