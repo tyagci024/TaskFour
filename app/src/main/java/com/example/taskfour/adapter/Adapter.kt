@@ -24,22 +24,32 @@ class Adapter(private var cryptoList: List<CryptoModel>) :
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(crypto)
         }
-           }
+    }
 
     override fun getItemCount() = cryptoList.size
 
-    class CryptoListViewHolder( val binding: ItemLayoutBinding) :
+    class CryptoListViewHolder(val binding: ItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(coin: CryptoModel) {
+        fun bind(coin: CryptoModel) {
             binding.apply {
                 textviewName.text = coin.name
                 textViewCurrency.text = coin.currentPrice.toString()
-                textViewDailyPerc.text=coin.priceChangePercentage24H.toString()
+                textViewDailyPerc.text = "%${coin.priceChangePercentage24H}"
                 imageviewCoin.downloadFromURL(coin.image)
                 if (coin.priceChangePercentage24H > 0) {
-                    textViewDailyPerc.setTextColor(ContextCompat.getColor(itemView.context, R.color.green))
+                    textViewDailyPerc.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.green
+                        )
+                    )
                 } else {
-                    textViewDailyPerc.setTextColor(ContextCompat.getColor(itemView.context, R.color.red))
+                    textViewDailyPerc.setTextColor(
+                        ContextCompat.getColor(
+                            itemView.context,
+                            R.color.red
+                        )
+                    )
                 }
             }
         }
