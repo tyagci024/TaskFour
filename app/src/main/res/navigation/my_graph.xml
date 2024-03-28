@@ -26,4 +26,18 @@
             android:name="currentCoin"
             app:argType="com.example.taskfour.model.CryptoModel" />
     </fragment>
+    <fragment
+        android:id="@+id/favoritesPageFragment"
+        android:name="com.example.taskfour.view.FavoritesPageFragment"
+        android:label="fragment_favorites_page"
+        tools:layout="@layout/fragment_favorites_page" >
+        <action
+            android:id="@+id/action_favoritesPageFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newsPageFragment"
+        android:name="com.example.taskfour.view.NewsPageFragment"
+        android:label="fragment_news_page"
+        tools:layout="@layout/fragment_news_page" />
 </navigation>
