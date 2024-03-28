@@ -24,26 +24,21 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment=supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController=navHostFragment.navController
 
-        // BottomNavigationView ayarlanır
         val bottomNW=binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 
-        // ActionBarın ayarlanması
-        setupActionBarWithNavController(navController)
+        setSupportActionBar(null)
         bottomNW.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_all -> {
-                    // ListFragment'a git
                     navController.navigate(R.id.listFragment)
                     true
                 }
                 R.id.navigation_favorites -> {
-                    // Favoriler Fragment'a git
                     navController.navigate(R.id.favoritesPageFragment)
                     true
                 }
                 R.id.navigation_news -> {
-                    // Haberler Fragment'a git
                     navController.navigate(R.id.newsPageFragment)
                     true
                 }
@@ -54,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp() || super.onSupportNavigateUp()
+        //return navController.navigateUp() || super.onSupportNavigateUp()
+        return navController.navigateUp()
     }
 }
