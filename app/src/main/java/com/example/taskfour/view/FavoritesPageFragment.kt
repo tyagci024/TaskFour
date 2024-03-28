@@ -1,0 +1,58 @@
+package com.example.taskfour.view
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.taskfour.R
+import com.example.taskfour.adapter.Adapter
+import com.example.taskfour.adapter.NewsAdapter
+import com.example.taskfour.databinding.FragmentFavoritesPageBinding
+import com.example.taskfour.viewModel.CoinListViewModel
+
+class FavoritesPageFragment : Fragment() {
+    private lateinit var binding:FragmentFavoritesPageBinding
+    private lateinit var adapter : Adapter
+    private val viewModel: CoinListViewModel by viewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+        ): View? {
+        binding=FragmentFavoritesPageBinding.inflate(inflater,container,false)
+        binding.recyclerViewFav.layoutManager = LinearLayoutManager(requireContext())
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        newsObserver()
+        refreshApiData()
+    }
+    private fun newsObserver() {
+        viewModel.readAllData.observe(viewLifecycleOwner) { newsList ->
+            adapter = Adapter(newsList)
+            binding.recyclerViewFav.adapter = adapter
+            adapter.onItemClickListener = { cryptoModel ->
+                   val action =
+                ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel                )
+                findNavController().navigate(action)
+            }
+        }
+    }
+
+    private fun refreshApiData() {
+        binding.swipeRefreshLay.setOnRefreshListener {
+            viewModel.fetchData()
+            binding.swipeRefreshLay.isRefreshing = false
+        }
+    }
+}
