@@ -1,15 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_all"
         android:title="Hepsi"
-         />
+        android:icon="@drawable/home" />
     <item
         android:id="@+id/navigation_favorites"
         android:title="Favoriler"
-        />
+        android:icon="@drawable/enabled_fav_star" />
     <item
         android:id="@+id/navigation_news"
         android:title="Haberler"
-        />
+        android:icon="@drawable/news_news"/>
 </menu>
