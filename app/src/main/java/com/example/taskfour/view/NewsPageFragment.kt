@@ -72,17 +72,17 @@ class NewsPageFragment : Fragment() {
             }
         }
         viewModelNews.errorObs.observe(viewLifecycleOwner) {
-            if (it) {
-                with(binding) {
-                    progressBar.visibility = View.GONE
-                    recyclerViewNews.visibility = View.GONE
-                    textviewError.visibility = View.VISIBLE
-                }
-            } else {
+            if (it=="true") {
                 with(binding) {
                     progressBar.visibility = View.GONE
                     recyclerViewNews.visibility = View.VISIBLE
                     textviewError.visibility = View.GONE
+                }
+            } else {
+                with(binding) {
+                    progressBar.visibility = View.GONE
+                    recyclerViewNews.visibility = View.GONE
+                    textviewError.visibility = View.VISIBLE
                 }
             }
         }

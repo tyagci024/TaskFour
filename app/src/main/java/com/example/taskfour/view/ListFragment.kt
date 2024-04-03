@@ -85,17 +85,18 @@ class ListFragment : Fragment() {
             }
         }
         viewModel.errorObs.observe(viewLifecycleOwner) {
-            if (it) {
-                with(binding) {
-                    progressBar.visibility = View.GONE
-                    recyclerViewCrypto.visibility = View.GONE
-                    textviewError.visibility = View.VISIBLE
-                }
-            } else {
+            if (it=="false") {
                 with(binding) {
                     progressBar.visibility = View.GONE
                     recyclerViewCrypto.visibility = View.VISIBLE
                     textviewError.visibility = View.GONE
+                }
+            } else {
+                with(binding) {
+                    progressBar.visibility = View.GONE
+                    recyclerViewCrypto.visibility = View.GONE
+                    textviewError.visibility = View.VISIBLE
+                    textviewError.text=it
                 }
             }
         }

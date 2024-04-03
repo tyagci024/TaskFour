@@ -6,11 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
-import com.example.taskfour.model.NewsItem
 import com.example.taskfour.room.CryptoDatabase
 import com.example.taskfour.room.CryptoRepository
 import com.example.taskfour.service.CryptoApiService
-import com.example.taskfour.service.NewsApiService
 import kotlinx.coroutines.launch
 
 class CoinListViewModel(application: Application) : AndroidViewModel(application) {
@@ -26,8 +24,8 @@ class CoinListViewModel(application: Application) : AndroidViewModel(application
     private val loading = MutableLiveData<Boolean>()
     val loadingObs: LiveData<Boolean>
         get() = loading
-    private val error = MutableLiveData<Boolean>()
-    val errorObs: LiveData<Boolean>
+    private val error = MutableLiveData<String>()
+    val errorObs: LiveData<String>
         get() = error
 
     init {
@@ -51,12 +49,13 @@ class CoinListViewModel(application: Application) : AndroidViewModel(application
                     }
                 }
                 cryptoList.value = result
-                error.value = false
+                error.value = "false"
             } catch (e: Exception) {
-                error.value = true
+                error.value = e.toString()
             }
             loading.value = false
         }
     }
+
 
 }
