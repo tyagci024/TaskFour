@@ -18,15 +18,15 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
 
     private val cryptoApiService = CryptoApiService()
 
-    private val cryptoList = MutableLiveData<List<CryptoModel>>()
-    val cryptoListObs: LiveData<List<CryptoModel>>
-        get() = cryptoList
-    private val loading = MutableLiveData<Boolean>()
-    val loadingObs: LiveData<Boolean>
-        get() = loading
-    private val error = MutableLiveData<Boolean>()
-    val errorObs: LiveData<Boolean>
-        get() = error
+    private val _cryptoList = MutableLiveData<List<CryptoModel>>()
+    val cryptoList: LiveData<List<CryptoModel>>
+        get() = _cryptoList
+    private val _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean>
+        get() = _loading
+    private val _error = MutableLiveData<Boolean>()
+    val error: LiveData<Boolean>
+        get() = _error
 
     init {
         fetchData()
@@ -36,7 +36,7 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     }
     fun fetchData() {
         viewModelScope.launch {
-            loading.value = true
+            _loading.value = true
             try {
                 val result = cryptoApiService.getCoinList()
 
@@ -51,12 +51,12 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
                           }
                       }
                   }
-                cryptoList.value = result
-                error.value = false
+                _cryptoList.value = result
+                _error.value = false
             } catch (e: Exception) {
-                error.value = true
+                _error.value = true
             }
-            loading.value = false
+            _loading.value = false
         }
     }
 
