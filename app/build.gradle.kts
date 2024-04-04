@@ -5,6 +5,8 @@ plugins {
     id ("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("dagger.hilt.android.plugin")// Dagger Hilt plugin
+
 }
 
 android {
@@ -53,6 +55,11 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.11.0")
     kapt ("androidx.room:room-compiler:2.6.1")
     androidTestImplementation ("androidx.room:room-testing:2.6.1" )
+
+    // Dagger Hilt dependencies
+    implementation ("com.google.dagger:hilt-android:2.51.1")
+    kapt ("com.google.dagger:hilt-android-compiler:2.51.1")
+
 
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
