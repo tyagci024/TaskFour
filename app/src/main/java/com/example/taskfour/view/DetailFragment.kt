@@ -34,7 +34,7 @@ class DetailFragment : Fragment() {
         with(binding){
             textViewCoinName.text = args.currentCoin.name
             textViewCoinSymbol.text = args.currentCoin.symbol.uppercase()
-            textViewPrice.text = getString(R.string.current_price, args.currentCoin.currentPrice)
+            textViewPrice.text = getString(R.string.current_price, args.currentCoin.currentPrice.toString())
             textViewHigh24h.text = args.currentCoin.high24h.toString()
             textViewLow24h.text = args.currentCoin.low24h.toString()
             viewModel.isCoinlInDatabase(args.currentCoin.coinId).observe(viewLifecycleOwner) { isCoinInDatabase ->
