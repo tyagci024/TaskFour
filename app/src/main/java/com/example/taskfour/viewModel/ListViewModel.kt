@@ -40,14 +40,16 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
             try {
                 val result = cryptoApiService.getCoinList()
 
-                val allCrypto = repostory.getAllCrypto()
+                val allCrypto = repostory.getAllCrypto().value
 
                   for (apiCrypto in result) {
-                      for (roomCrypto in allCrypto) {
-                          if (apiCrypto.symbol == roomCrypto.symbol) {
-                              apiCrypto.coinId = roomCrypto.coinId
-                              repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
-                              break
+                      if (allCrypto != null) {
+                          for (roomCrypto in allCrypto) {
+                              if (apiCrypto.symbol == roomCrypto.symbol) {
+                                  apiCrypto.coinId = roomCrypto.coinId
+                                  repostory.updateCrypto(apiCrypto) // Güncelleme işlemi
+                                  break
+                              }
                           }
                       }
                   }

@@ -72,7 +72,7 @@ class ListFragment : Fragment() {
             when (item.itemId) {
                 R.id.navigation_all -> {
                     // "Hepsi" tıklandığında yapılacak işlemler
-                    viewModel.cryptoListObs.observe(viewLifecycleOwner) {
+                    viewModel.cryptoList.observe(viewLifecycleOwner) {
                         it?.let {
                             originalList = it
                             adapterCoin = Adapter(it)
@@ -112,7 +112,7 @@ class ListFragment : Fragment() {
     }
 
     fun liveDataObserver() {
-        viewModel.cryptoListObs.observe(viewLifecycleOwner) {
+        viewModel.cryptoList.observe(viewLifecycleOwner) {
             it?.let {
                 originalList = it
                 adapterCoin = Adapter(it)
@@ -124,7 +124,7 @@ class ListFragment : Fragment() {
                 }
             }
         }
-        viewModel.loadingObs.observe(viewLifecycleOwner) {
+        viewModel.loading.observe(viewLifecycleOwner) {
             if (it) {
                 with(binding) {
                     progressBar.visibility = View.VISIBLE
@@ -139,7 +139,7 @@ class ListFragment : Fragment() {
                 }
             }
         }
-        viewModel.errorObs.observe(viewLifecycleOwner) {
+        viewModel.error.observe(viewLifecycleOwner) {
             if (it) {
                 with(binding) {
                     progressBar.visibility = View.GONE
