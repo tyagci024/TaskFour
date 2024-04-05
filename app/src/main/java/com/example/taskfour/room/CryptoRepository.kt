@@ -11,15 +11,12 @@ class CryptoRepository(private val cryptoDao: CryptoDao) {
     suspend fun updateCrypto(crypto: CryptoModel) {
         cryptoDao.updateCrypto(crypto)
     }
-    fun getCryptoBySymbol(symbol: String): LiveData<CryptoModel?> {
-        return cryptoDao.getCryptoBySymbol(symbol)
-    }
 
-    suspend fun deleteBySymbol(symbol: String){
-        cryptoDao.deleteCryptoBySymbol(symbol)
+    suspend fun deleteById(coinId: Int){
+        cryptoDao.deleteCryptoById(coinId)
     }
-    fun isSymbolInDatabase(symbol: String):LiveData<Boolean>{
-        return cryptoDao.isSymbolInDatabase(symbol)
+    fun isCoinInDatabase(coinId: Int):LiveData<Boolean>{
+        return cryptoDao.isCoinInDatabase(coinId)
     }
 
     fun getAllCrypto(): LiveData<List<CryptoModel>> {

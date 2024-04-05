@@ -37,11 +37,11 @@ class DetailFragment : Fragment() {
             textViewPrice.text = StringBuilder().append("$").append(args.currentCoin.currentPrice).toString()
             textViewHigh24h.text = args.currentCoin.high24h.toString()
             textViewLow24h.text = args.currentCoin.low24h.toString()
-            viewModel.isSymbolInDatabase(args.currentCoin.symbol).observe(viewLifecycleOwner) { isSymbolInDatabase ->
-                if (isSymbolInDatabase) {
+            viewModel.isCoinlInDatabase(args.currentCoin.coinId).observe(viewLifecycleOwner) { isCoinInDatabase ->
+                if (isCoinInDatabase) {
                     imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
                     imageViewFavIcon.setOnClickListener {
-                        viewModel.deleteCrypto(args.currentCoin.symbol)
+                        viewModel.deleteCrypto(args.currentCoin.coinId)
                     }
                 } else {
                     imageViewFavIcon.setImageResource(R.drawable.star)

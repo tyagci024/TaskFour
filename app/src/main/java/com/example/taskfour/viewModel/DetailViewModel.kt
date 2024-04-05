@@ -19,8 +19,8 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         readAllData = repository.readAllData
     }
 
-    fun isSymbolInDatabase(symbol: String): LiveData<Boolean> {
-        return repository.isSymbolInDatabase(symbol)
+    fun isCoinlInDatabase(coinId: Int): LiveData<Boolean> {
+        return repository.isCoinInDatabase(coinId)
     }
 
     fun insertCrypto(crypto: CryptoModel) {
@@ -29,9 +29,9 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun deleteCrypto(symbol: String) {
+    fun deleteCrypto(coinId: Int) {
         viewModelScope.launch {
-            repository.deleteBySymbol(symbol)
+            repository.deleteById(coinId)
         }
     }
 }

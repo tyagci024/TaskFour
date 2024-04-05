@@ -19,15 +19,13 @@ interface CryptoDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCrypto(crypto: CryptoModel)
 
-    @Query("DELETE FROM crypto_table WHERE symbol = :symbol")
-    suspend fun deleteCryptoBySymbol(symbol: String)
+    @Query("DELETE FROM crypto_table WHERE coinId = :coinId")
+    suspend fun deleteCryptoById(coinId: Int)
 
     @Query("DELETE FROM crypto_table")
     suspend fun deleteAllCryptos()
 
-    @Query("SELECT * FROM crypto_table WHERE symbol = :symbol")
-    fun getCryptoBySymbol(symbol: String): LiveData<CryptoModel?>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM crypto_table WHERE symbol = :symbol LIMIT 1)")
-    fun isSymbolInDatabase(symbol: String): LiveData<Boolean>
+    @Query("SELECT EXISTS(SELECT 1 FROM crypto_table WHERE coinId = :coinId LIMIT 1)")
+    fun isCoinInDatabase(coinId: Int): LiveData<Boolean>
 }
