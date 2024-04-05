@@ -59,8 +59,7 @@ dependencies {
     // Dagger Hilt dependencies
     implementation ("com.google.dagger:hilt-android:2.51.1")
     kapt ("com.google.dagger:hilt-android-compiler:2.51.1")
-
-
+    implementation("androidx.core:core-splashscreen:1.0.0")
     implementation("com.google.code.gson:gson:2.8.8")
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
