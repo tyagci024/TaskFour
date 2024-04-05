@@ -39,10 +39,10 @@ class CoinListViewModel(application: Application) : AndroidViewModel(application
             loading.value = true
             try {
                 val result = cryptoApiService.getCoinList()
-                val allCrypto = repostory.getAllCrypto()
+                val allCrypto = repostory.getAllCrypto().value
 
                 for (apiCrypto in result) {
-                    val matchingCrypto = allCrypto.find { it.symbol == apiCrypto.symbol }
+                    val matchingCrypto = allCrypto?.find { it.symbol == apiCrypto.symbol }
                     matchingCrypto?.let {
                         apiCrypto.coinId = it.coinId
                         repostory.updateCrypto(apiCrypto)
