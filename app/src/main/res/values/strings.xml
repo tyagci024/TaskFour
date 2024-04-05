@@ -8,6 +8,7 @@
     <string name="price_header">543865</string>
     <string name="high_24h_header">High 24h</string>
     <string name="low_24h_header">Low 24h</string>
+    <string name="current_price">$%s</string>
     <string name="search_edit">Search</string>
     <string name="last_updated_header">Last Updated</string>
 </resources>
