@@ -3,16 +3,15 @@ package com.example.taskfour.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.room.CryptoDatabase
 import com.example.taskfour.room.CryptoRepository
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
     var readAllData: LiveData<List<CryptoModel>>
-    private val db = FirebaseFirestore.getInstance()
     var repository: CryptoRepository
     init {
         val cryptoDao = CryptoDatabase.getDatabase(application).cryptoDao()
@@ -20,8 +19,8 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         readAllData = repository.readAllData
     }
 
-    fun isSymbolInDatabase(symbol: String): LiveData<Boolean> {
-        return repository.isSymbolInDatabase(symbol)
+    fun isCoinlInDatabase(coinId: Int): LiveData<Boolean> {
+        return repository.isCoinInDatabase(coinId)
     }
 
     fun insertCrypto(crypto: CryptoModel) {
@@ -30,9 +29,9 @@ class DetailViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun deleteCrypto(symbol: String) {
+    fun deleteCrypto(coinId: Int) {
         viewModelScope.launch {
-            repository.deleteBySymbol(symbol)
+            repository.deleteById(coinId)
         }
     }
 }
