@@ -9,5 +9,9 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.TaskFour" parent="Base.Theme.TaskFour" />
+    <style name="Theme.App.SplashScreen" parent="Base.Theme.TaskFour" >
+        <item name ="windowSplashScreenBackground">@color/dark_blue</item>
+        <item name ="windowSplashScreenAnimatedIcon">@drawable/pngegg</item>
+        <item name ="postSplashScreenTheme">@style/Base.Theme.TaskFour</item>
+    </style>
 </resources>
