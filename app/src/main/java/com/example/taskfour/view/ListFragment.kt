@@ -38,24 +38,32 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
+        setupViews()
+        setupSearchBarListener()
+        setupBottomNavigationListener()
         liveDataObserver()
-        binding.swipeRefreshLay.setOnRefreshListener {
-            viewModel.fetchData()
-            binding.swipeRefreshLay.isRefreshing = false
-        }
+    }
+
+    private fun setupViews() {
+        binding.recyclerViewCrypto.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun setupSearchBarListener() {
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
                 start: Int,
                 count: Int,
-                after: Int,) {
+                after: Int,
+            ) {
             }
 
             override fun onTextChanged(
                 s: CharSequence?,
                 start: Int,
                 before: Int,
-                count: Int) {
+                count: Int,
+            ) {
                 val searchText = s.toString().lowercase(Locale.getDefault())
                 if (::originalList.isInitialized) {
                     val filteredList = originalList.filter {
@@ -68,50 +76,25 @@ class ListFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
+
+    private fun setupBottomNavigationListener() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_all -> {
-                    // "Hepsi" tıklandığında yapılacak işlemler
-                    viewModel.cryptoList.observe(viewLifecycleOwner) {
-                        it?.let {
-                            originalList = it
-                            adapterCoin = Adapter(it)
-                            binding.recyclerViewCrypto.adapter = adapterCoin
-                            adapterCoin.onItemClickListener = { cryptoModel ->
-                                val action =
-                                    ListFragmentDirections.actionListFragmentToDetailFragment(
-                                        cryptoModel)
-                                findNavController().navigate(action)
-                            }
-                        }
-                    }
+                    handleHomeNavigation()
                     true
                 }
-
                 R.id.navigation_favorites -> {
-                    // "Favoriler" tıklandığında yapılacak işlemler
-                    viewModel.readAllData.observe(viewLifecycleOwner) {
-                        it?.let {
-                            originalList = it
-                            adapterCoin = Adapter(it)
-                            binding.recyclerViewCrypto.adapter = adapterCoin
-                            adapterCoin.onItemClickListener = { cryptoModel ->
-                                val action =
-                                    ListFragmentDirections.actionListFragmentToDetailFragment(
-                                        cryptoModel)
-                                findNavController().navigate(action)
-                            }
-                        }
-                    }
+                    handleFavoritesNavigation()
                     true
                 }
-
                 else -> false
             }
         }
     }
 
-    fun liveDataObserver() {
+    private fun handleHomeNavigation() {
         viewModel.cryptoList.observe(viewLifecycleOwner) {
             it?.let {
                 originalList = it
@@ -124,6 +107,24 @@ class ListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun handleFavoritesNavigation() {
+        viewModel.readAllData.observe(viewLifecycleOwner) {
+            it?.let {
+                originalList = it
+                adapterCoin = Adapter(it)
+                binding.recyclerViewCrypto.adapter = adapterCoin
+                adapterCoin.onItemClickListener = { cryptoModel ->
+                    val action =
+                        ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    private fun liveDataObserver() {
         viewModel.loading.observe(viewLifecycleOwner) {
             if (it) {
                 with(binding) {
