@@ -26,9 +26,7 @@ abstract class CryptoDatabase : RoomDatabase() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                         }
-                    })
-                    .fallbackToDestructiveMigration()
-                    .build()
+                    }).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }
