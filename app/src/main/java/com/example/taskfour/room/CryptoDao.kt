@@ -16,9 +16,6 @@ interface CryptoDao {
     @Query("SELECT * FROM crypto_table")
     fun getAllCryptos(): LiveData<List<CryptoModel>>
 
-    @Query("SELECT * FROM crypto_table")
-    suspend fun getAllCrypto(): List<CryptoModel>
-
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateCrypto(crypto: CryptoModel)
 

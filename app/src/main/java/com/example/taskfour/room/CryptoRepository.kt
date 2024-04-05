@@ -22,7 +22,7 @@ class CryptoRepository(private val cryptoDao: CryptoDao) {
         return cryptoDao.isSymbolInDatabase(symbol)
     }
 
-    suspend fun getAllCrypto(): List<CryptoModel> {
-        return cryptoDao.getAllCrypto()
+    fun getAllCrypto(): LiveData<List<CryptoModel>> {
+        return cryptoDao.getAllCryptos()
     }
 }
