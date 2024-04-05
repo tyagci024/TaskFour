@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="Theme.App.SplashTheme" parent="Theme.SplashScreen">
+
+        <item name="windowSplashScreenBackground">@color/dark_blue</item>
+        <item name="windowSplashScreenAnimationDuration">1500</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/pngegg</item>
+        <item name="postSplashScreenTheme">@style/Base.Theme.TaskFour</item>
+    </style>
+
+
+</resources>
