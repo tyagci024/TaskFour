@@ -9,31 +9,31 @@
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/dp_8"
         android:textSize="@dimen/sp_16"
-        android:layout_marginBottom="@dimen/dp_8"/>
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewSource"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_14"
+        android:layout_marginBottom="@dimen/dp_8"
         android:textColor="#888888"
-        android:layout_marginBottom="@dimen/dp_8"/>
+        android:textSize="@dimen/sp_14" />
 
     <ImageView
         android:id="@+id/imageViewThumbnail"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_200"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="@dimen/dp_8"/>
+        android:layout_marginBottom="@dimen/dp_8"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textViewReactionsCount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/sp_14"
+        android:layout_marginBottom="@dimen/dp_8"
         android:textColor="#888888"
-        android:layout_marginBottom="@dimen/dp_8"/>
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>
