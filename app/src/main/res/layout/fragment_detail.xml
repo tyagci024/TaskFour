@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:padding="@dimen/dp_32">
 
-
     <ImageView
         android:id="@+id/imageViewFavIcon"
         android:layout_width="@dimen/dp_32"
@@ -48,9 +47,9 @@
         android:textSize="@dimen/sp_64"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewCoinName"
-        app:layout_constraintHorizontal_bias="0.5"
         tools:text="@string/price_header" />
 
     <TextView
@@ -113,7 +112,6 @@
             tools:text="2345" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <ImageView
         android:id="@+id/imageViewCoin"

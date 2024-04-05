@@ -2,10 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/navigation_all"
-        android:title="Hepsi"
-         />
+        android:title="Hepsi" />
     <item
         android:id="@+id/navigation_favorites"
-        android:title="Favoriler"
-        />
+        android:title="Favoriler" />
 </menu>
