@@ -7,14 +7,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.NewsItem
+import com.example.taskfour.repository.TaskFourRepository
 import com.example.taskfour.service.NewsApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsListViewModel (application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class NewsListViewModel @Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
+
     private val disposable = CompositeDisposable()
     private val apiService = NewsApiService()
     val newsList = MutableLiveData<List<NewsItem>>()
@@ -30,7 +35,7 @@ class NewsListViewModel (application: Application) : AndroidViewModel(applicatio
     fun getDataFromAPi() {
         loading.value = true
         disposable.add(
-            apiService.getNewsData()
+            repository.getAllNews()
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<NewsItem>>() {

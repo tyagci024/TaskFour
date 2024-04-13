@@ -11,7 +11,9 @@ import com.example.taskfour.MainActivity
 import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
     private lateinit var binding: FragmentLoginBinding
     private lateinit var auth: FirebaseAuth

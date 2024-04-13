@@ -19,11 +19,12 @@ import com.example.taskfour.databinding.FragmentListBinding
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.viewModel.CoinListViewModel
 import com.example.taskfour.viewModel.NewsListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONArray
-
+@AndroidEntryPoint
 class ListFragment : Fragment() {
     private val viewModel: CoinListViewModel by viewModels()
     private lateinit var adapterCoin: Adapter

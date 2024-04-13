@@ -16,7 +16,9 @@ import com.example.taskfour.R
 import com.example.taskfour.adapter.NewsAdapter
 import com.example.taskfour.databinding.FragmentNewsPageBinding
 import com.example.taskfour.viewModel.NewsListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NewsPageFragment : Fragment() {
     private lateinit var binding: FragmentNewsPageBinding
     private val viewModelNews: NewsListViewModel by viewModels()

@@ -16,8 +16,10 @@ import com.example.taskfour.adapter.Adapter
 import com.example.taskfour.adapter.NewsAdapter
 import com.example.taskfour.databinding.FragmentFavoritesPageBinding
 import com.example.taskfour.viewModel.CoinListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class FavoritesPageFragment : Fragment() {
+@AndroidEntryPoint
+class FavoritesPageFragment : Fragment() {/*
     private lateinit var binding:FragmentFavoritesPageBinding
     private lateinit var adapter : Adapter
     private val viewModel: CoinListViewModel by viewModels()
@@ -58,5 +60,5 @@ class FavoritesPageFragment : Fragment() {
             viewModel.fetchData()
             binding.swipeRefreshLay.isRefreshing = false
         }
-    }
+    }*/
 }

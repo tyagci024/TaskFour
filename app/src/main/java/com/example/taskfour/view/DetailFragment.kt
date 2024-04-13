@@ -11,7 +11,9 @@ import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
 import com.example.taskfour.utilies.downloadFromURL
 import com.example.taskfour.viewModel.DetailViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val args by navArgs<DetailFragmentArgs>()
