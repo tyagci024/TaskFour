@@ -6,17 +6,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
+import com.example.taskfour.repository.TaskFourRepository
 import com.example.taskfour.room.CryptoDatabase
 import com.example.taskfour.room.CryptoRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
-    var readAllData: LiveData<List<CryptoModel>>
-    var repository: CryptoRepository
+@HiltViewModel
+class DetailViewModel@Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
+    var allDataFavorite: LiveData<List<CryptoModel>>
     init {
-        val cryptoDao = CryptoDatabase.getDatabase(application).cryptoDao()
-        repository = CryptoRepository(cryptoDao)
-        readAllData = repository.readAllData
+        allDataFavorite = repository.getAllCrypto()
     }
 
     fun isCoinlInDatabase(coinId: Int): LiveData<Boolean> {

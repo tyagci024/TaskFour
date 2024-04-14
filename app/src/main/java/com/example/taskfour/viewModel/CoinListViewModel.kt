@@ -1,6 +1,7 @@
 package com.example.taskfour.viewModel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,10 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CoinListViewModel @Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
-   // var readAllData: LiveData<List<CryptoModel>>
-   // var repostory: CryptoRepository
-
-    private val cryptoApiService = CryptoApiService()
+    var allDataFavorite: LiveData<List<CryptoModel>>
 
     private val cryptoList = MutableLiveData<List<CryptoModel>>()
 
@@ -34,24 +32,23 @@ class CoinListViewModel @Inject constructor(application: Application, private va
 
     init {
         fetchData()
-        val cryptoDao = CryptoDatabase.getDatabase(application).cryptoDao()
-        /*repostory = CryptoRepository(cryptoDao)
-        readAllData = repostory.readAllData*/
+        allDataFavorite = repository.getAllCrypto()
     }
     fun fetchData() {
         viewModelScope.launch {
             loading.value = true
             try {
                 val result = repository.getAllCoin()
-              /*  val allCrypto = repostory.getAllCrypto().value
+                val allCrypto = allDataFavorite.value
+                Log.d("CoinListViewModel", "Fetched data size: ${result.size}")
 
                 for (apiCrypto in result) {
                     val matchingCrypto = allCrypto?.find { it.symbol == apiCrypto.symbol }
                     matchingCrypto?.let {
                         apiCrypto.coinId = it.coinId
-                        repostory.updateCrypto(apiCrypto)
+                        repository.updateCrypto(apiCrypto)
                     }
-                }*/
+                }
                 cryptoList.value = result
                 error.value = "false"
             } catch (e: Exception) {
@@ -60,6 +57,4 @@ class CoinListViewModel @Inject constructor(application: Application, private va
             loading.value = false
         }
     }
-
-
 }

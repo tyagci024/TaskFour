@@ -19,7 +19,7 @@ import com.example.taskfour.viewModel.CoinListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavoritesPageFragment : Fragment() {/*
+class FavoritesPageFragment : Fragment() {
     private lateinit var binding:FragmentFavoritesPageBinding
     private lateinit var adapter : Adapter
     private val viewModel: CoinListViewModel by viewModels()
@@ -44,12 +44,12 @@ class FavoritesPageFragment : Fragment() {/*
         refreshApiData()
     }
     private fun newsObserver() {
-        viewModel.readAllData.observe(viewLifecycleOwner) { newsList ->
+        viewModel.allDataFavorite.observe(viewLifecycleOwner) { newsList ->
             adapter = Adapter(newsList)
             binding.recyclerViewFav.adapter = adapter
             adapter.onItemClickListener = { cryptoModel ->
                    val action =
-                ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel                )
+                FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailFragment(cryptoModel)
                 findNavController().navigate(action)
             }
         }
@@ -60,5 +60,5 @@ class FavoritesPageFragment : Fragment() {/*
             viewModel.fetchData()
             binding.swipeRefreshLay.isRefreshing = false
         }
-    }*/
+    }
 }
