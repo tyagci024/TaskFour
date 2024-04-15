@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.NewsItem
 import com.example.taskfour.repository.TaskFourRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,12 +13,14 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NewsListViewModel @Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
-
-    private val disposable = CompositeDisposable()
+class NewsListViewModel @Inject constructor(
+    application: Application,
+    private val repository: TaskFourRepository,
+) : AndroidViewModel(application) {
     val newsList = MutableLiveData<List<NewsItem>>()
     private val loading = MutableLiveData<Boolean>()
     val loadingObs: LiveData<Boolean>
@@ -25,38 +28,26 @@ class NewsListViewModel @Inject constructor(application: Application, private va
     private val error = MutableLiveData<String>()
     val errorObs: LiveData<String>
         get() = error
+
     init {
-        getDataFromAPi()
-    }
-    fun getDataFromAPi() {
-        loading.value = true
-        disposable.add(
-            repository.getAllNews()
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<List<NewsItem>>() {
-                    override fun onSuccess(t: List<NewsItem>) {
-                        newsList.value = t
-                        Log.d(TAG, "API verileri başarıyla çekildi. Çekilen veri sayısı: ${t.size}")
-                        loading.value = false
-                        error.value = "true"
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.e(TAG, "API verileri çekilirken hata oluştu", e)
-                        loading.value = false
-                        error.value = e.toString()
-                    }
-                }
-                )
-        )
+        fetchData()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        disposable.clear()
-    }
+    fun fetchData() {
+        viewModelScope.launch {
+            loading.value = true
+            try {
+                val result = repository.getAllNews()
+                Log.d(TAG, "Fetched data size: ${result.size}")
 
+                newsList.value = result
+                error.value = "false"
+            } catch (e: Exception) {
+                error.value = e.toString()
+            }
+            loading.value = false
+        }
+    }
     companion object {
         private const val TAG = "NewsListViewModel"
     }

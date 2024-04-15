@@ -1,7 +1,6 @@
 package com.example.taskfour.service
 
 import com.example.taskfour.model.CryptoModel
-import retrofit2.Call
 import retrofit2.http.GET
 
 interface CryptoApi {

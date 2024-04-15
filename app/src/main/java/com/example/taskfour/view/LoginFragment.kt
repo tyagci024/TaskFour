@@ -1,6 +1,7 @@
 package com.example.taskfour.view
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,32 +35,57 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (activity as MainActivity).hideBottomNavigation()
 
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            navigateToProfile()
-        }
-        binding.registerButton.setOnClickListener {
-            registerButton()
-        }
-    }
-    fun registerButton(){
-        val email = binding.emailEditText.text.toString()
-        val password = binding.passwordEditText.text.toString()
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "Kayıt işlemi başarılı", Toast.LENGTH_LONG).show()
-                    navigateToProfile()
-                } else {
-                    val exception = task.exception
-                    Toast.makeText(requireContext(), "Kayıt işlemi başarısız: ${exception?.message}", Toast.LENGTH_LONG).show()
+        // Firebase auth instance
+        auth = FirebaseAuth.getInstance()
+
+        binding.buttonGiris.setOnClickListener {
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+
+            // E-posta ve şifre ile giriş yap
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        // Giriş başarılı ise yapılacak işlemler
+                        Log.d(TAG, "signInWithEmail:success")
+                        // Örneğin, kullanıcıyı ana ekrana yönlendirme
+                        findNavController().navigate(R.id.action_loginFragment_to_listFragment)
+                    } else {
+                        // Giriş başarısız ise kullanıcıya uyarı göster
+                        Log.d(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            requireContext(), "Giriş başarısız, lütfen tekrar deneyin.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
+        }
+
+        binding.buttonKayit.setOnClickListener {
+            val email = binding.emailEditText.text.toString()
+            val password = binding.passwordEditText.text.toString()
+
+            // E-posta ve şifre ile kullanıcı kaydı yap
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        // Kayıt başarılı ise yapılacak işlemler
+                        Log.d(TAG, "createUserWithEmail:success")
+                        // Örneğin, kullanıcıyı ana ekrana yönlendirme
+                    } else {
+                        // Kayıt başarısız ise kullanıcıya uyarı göster
+                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            requireContext(), "Kayıt başarısız, lütfen tekrar deneyin.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
     }
 
-    fun navigateToProfile() {
-        findNavController().navigate(R.id.action_loginFragment_to_listFragment)
+    companion object {
+        private const val TAG = "LoginFragment"
     }
 }
