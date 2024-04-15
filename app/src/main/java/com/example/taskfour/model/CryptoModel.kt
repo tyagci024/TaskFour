@@ -11,6 +11,7 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "crypto_table")
 data class CryptoModel(
     @PrimaryKey(autoGenerate = true) var coinId: Int,
+    @SerializedName("id") var id: String,
     @SerializedName("symbol") val symbol: String,
     @SerializedName("name") val name: String,
     @SerializedName("image") val image: String,

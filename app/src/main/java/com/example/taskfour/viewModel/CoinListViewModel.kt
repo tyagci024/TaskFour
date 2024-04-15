@@ -8,9 +8,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.repository.TaskFourRepository
-import com.example.taskfour.room.CryptoDatabase
-import com.example.taskfour.room.CryptoRepository
-import com.example.taskfour.service.CryptoApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,9 +40,9 @@ class CoinListViewModel @Inject constructor(application: Application, private va
                 Log.d("CoinListViewModel", "Fetched data size: ${result.size}")
 
                 for (apiCrypto in result) {
-                    val matchingCrypto = allCrypto?.find { it.symbol == apiCrypto.symbol }
+                    val matchingCrypto = allCrypto?.find { it.id == apiCrypto.id }
                     matchingCrypto?.let {
-                        apiCrypto.coinId = it.coinId
+                        apiCrypto.id = it.id
                         repository.updateCrypto(apiCrypto)
                     }
                 }

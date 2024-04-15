@@ -3,12 +3,9 @@ package com.example.taskfour.viewModel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.repository.TaskFourRepository
-import com.example.taskfour.room.CryptoDatabase
-import com.example.taskfour.room.CryptoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,8 +17,8 @@ class DetailViewModel@Inject constructor(application: Application, private val r
         allDataFavorite = repository.getAllCrypto()
     }
 
-    fun isCoinlInDatabase(coinId: Int): LiveData<Boolean> {
-        return repository.isCoinInDatabase(coinId)
+    fun isCoinlInDatabase(symbol: String): LiveData<Boolean> {
+        return repository.isCoinInDatabase(symbol)
     }
 
     fun insertCrypto(crypto: CryptoModel) {
@@ -30,9 +27,9 @@ class DetailViewModel@Inject constructor(application: Application, private val r
         }
     }
 
-    fun deleteCrypto(coinId: Int) {
+    fun deleteCrypto(symbol: String) {
         viewModelScope.launch {
-            repository.deleteById(coinId)
+            repository.deleteById(symbol)
         }
     }
 }

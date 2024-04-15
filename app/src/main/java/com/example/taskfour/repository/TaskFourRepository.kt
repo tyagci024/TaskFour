@@ -21,11 +21,11 @@ class TaskFourRepository @Inject constructor(
         cryptoDao.updateCrypto(crypto)
     }
 
-    suspend fun deleteById(coinId: Int){
-        cryptoDao.deleteCryptoById(coinId)
+    suspend fun deleteById(id: String){
+        cryptoDao.deleteCryptoBySymbol(id)
     }
-    fun isCoinInDatabase(coinId: Int): LiveData<Boolean> {
-        return cryptoDao.isCoinInDatabase(coinId)
+    fun isCoinInDatabase(id: String): LiveData<Boolean> {
+        return cryptoDao.isSymbolInDatabase(id)
     }
 
     fun getAllCrypto(): LiveData<List<CryptoModel>> {
