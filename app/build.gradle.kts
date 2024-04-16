@@ -45,8 +45,6 @@ android {
     }
 }
 dependencies {
-    implementation ("io.reactivex.rxjava2:rxjava:2.1.1")
-    implementation ("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("com.google.firebase:firebase-auth:22.3.1")

@@ -1,7 +1,6 @@
 package com.example.taskfour.service
 
 import com.example.taskfour.model.NewsItem
-import io.reactivex.Single
 import retrofit2.http.GET
 
 interface NewsApi {

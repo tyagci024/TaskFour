@@ -1,7 +1,6 @@
 package com.example.taskfour.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,10 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.NewsItem
 import com.example.taskfour.repository.TaskFourRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -38,7 +33,6 @@ class NewsListViewModel @Inject constructor(
             loading.value = true
             try {
                 val result = repository.getAllNews()
-                Log.d(TAG, "Fetched data size: ${result.size}")
 
                 newsList.value = result
                 error.value = "false"
