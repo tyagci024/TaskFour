@@ -38,7 +38,6 @@ class AppModule {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_COIN_NEWS)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(NewsApi::class.java)
     }
