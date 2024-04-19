@@ -11,7 +11,6 @@ import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.taskfour.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -31,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment=supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController=navHostFragment.navController
 
+
         val bottomNW=binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 
@@ -38,6 +38,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(null)
         bottomNW.setOnItemSelectedListener { item ->
             when (item.itemId) {
+                R.id.loginFragment -> {
+                    binding.toolbar.visibility = View.GONE
+                    binding.bottomNavigationView.visibility = View.GONE
+                    true
+                }
                 R.id.navigation_all -> {
                     navController.navigate(R.id.listFragment)
                     true
@@ -53,17 +58,20 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
+        hideNavBars()
     }
-    fun hideBottomNavigation() {
-        binding.bottomNavigationView.visibility = View.GONE
-    }
-
 
     override fun onSupportNavigateUp(): Boolean {
         //return navController.navigateUp() || super.onSupportNavigateUp()
         return navController.navigateUp()
     }
 
-
+    private fun hideNavBars() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.loginFragment -> binding.bottomNavigationView.visibility = View.GONE
+                else -> binding.bottomNavigationView.visibility = View.VISIBLE
+            }
+        }
+    }
 }
