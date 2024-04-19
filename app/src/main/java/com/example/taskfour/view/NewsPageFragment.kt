@@ -92,7 +92,7 @@ class NewsPageFragment : Fragment() {
 
     private fun refreshApiData() {
         binding.swipeRefreshLay.setOnRefreshListener {
-            viewModelNews.getDataFromAPi()
+            viewModelNews.fetchData()
             binding.swipeRefreshLay.isRefreshing = false
         }
     }
