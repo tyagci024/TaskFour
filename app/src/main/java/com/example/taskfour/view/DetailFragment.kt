@@ -11,13 +11,18 @@ import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
 import com.example.taskfour.utilies.downloadFromURL
 import com.example.taskfour.viewModel.DetailViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @AndroidEntryPoint
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val args by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
+    private val firestore = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +41,9 @@ class DetailFragment : Fragment() {
             textViewPrice.text = getString(R.string.current_price, args.currentCoin.currentPrice.toString())
             textViewHigh24h.text = args.currentCoin.high24h.toString()
             textViewLow24h.text = args.currentCoin.low24h.toString()
+            imageViewFavIconFire.setOnClickListener {
+                viewModel.addCoinToFirestore(args.currentCoin)
+            }
             viewModel.isCoinlInDatabase(args.currentCoin.id).observe(viewLifecycleOwner) { isCoinInDatabase ->
                 if (isCoinInDatabase) {
                     imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
@@ -52,4 +60,5 @@ class DetailFragment : Fragment() {
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
     }
+
 }
