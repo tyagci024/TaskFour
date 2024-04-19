@@ -37,16 +37,17 @@ class LoginFragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        binding.buttonGiris.setOnClickListener {
-            loginUser()
+        with(binding){
+            buttonGiris.setOnClickListener {
+                loginUser()
+            }
+            buttonKayit.setOnClickListener {
+                registerUser()
+            }
         }
+    }//cvs dosyaları nasıl okunur
 
-        binding.buttonKayit.setOnClickListener {
-            registerUser()
-        }
-    }
-
-    private fun loginUser() {
+    private fun loginUser() {//registerla birleştirme için araştır
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
 
