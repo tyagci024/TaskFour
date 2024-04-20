@@ -43,6 +43,10 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.visibility = View.GONE
                     true
                 }
+                R.id.firestoreCoinFragment->{
+                    navController.navigate(R.id.firestoreCoinFragment)
+                    true
+                }
                 R.id.navigation_all -> {
                     navController.navigate(R.id.listFragment)
                     true
