@@ -8,7 +8,7 @@
         android:title="Favoriler Room"
         android:icon="@drawable/enabled_fav_star" />
     <item
-        android:id="@+id/navigation_favoritesFBase"
+        android:id="@+id/firestoreCoinFragment"
         android:title="Favoriler FireBase"
         android:icon="@drawable/firebaseon" />
     <item
