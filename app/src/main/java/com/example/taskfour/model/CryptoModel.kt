@@ -20,5 +20,4 @@ data class CryptoModel(
     @SerializedName("low_24h") val low24h: Double,
     @SerializedName("last_updated") val lastUpdated: String,
     @SerializedName("current_price") val currentPrice: Double,
-    var fav: Boolean = false,
 ) : Parcelable
