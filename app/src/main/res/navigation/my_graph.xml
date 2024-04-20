@@ -49,4 +49,13 @@
             android:id="@+id/action_loginFragment_to_listFragment"
             app:destination="@id/listFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/firestoreCoinFragment"
+        android:name="com.example.taskfour.view.FirestoreCoinFragment"
+        android:label="fragment_firestore_coin"
+        tools:layout="@layout/fragment_firestore_coin" >
+        <action
+            android:id="@+id/action_firestoreCoinFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>
