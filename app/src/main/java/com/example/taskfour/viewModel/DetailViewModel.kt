@@ -43,11 +43,15 @@ class DetailViewModel@Inject constructor(application: Application, private val r
         val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.let { user ->
             val coinData = hashMapOf(
+                "coinid" to crypto.coinId,
+                "id" to crypto.id,
                 "name" to crypto.name,
                 "symbol" to crypto.symbol.uppercase(),
                 "price" to crypto.currentPrice.toString(),
                 "high24h" to crypto.high24h.toString(),
                 "low24h" to crypto.low24h.toString(),
+                "lastupdate" to crypto.lastUpdated,
+                "priceChange" to crypto.priceChangePercentage24H,
                 "image" to crypto.image,
                 "timestamp" to SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date())
             )
@@ -65,4 +69,5 @@ class DetailViewModel@Inject constructor(application: Application, private val r
             println("Kullanıcı oturum açmamış, Firestore'a ekleme işlemi gerçekleştirilemedi.")
         }
     }
+
 }
