@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment=supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController=navHostFragment.navController
 
-
         val bottomNW=binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.visibility = View.GONE
                     true
                 }
-                R.id.firestoreCoinFragment->{
+                R.id.firestoreCoinFragment -> {
                     navController.navigate(R.id.firestoreCoinFragment)
                     true
                 }

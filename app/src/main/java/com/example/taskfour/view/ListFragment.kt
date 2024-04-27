@@ -37,13 +37,6 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentListBinding.inflate(inflater, container, false)
-        binding.recyclerViewCrypto.layoutManager = LinearLayoutManager(requireContext())
-        var dividerItemDecoration= DividerItemDecoration(requireContext(),RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable,null)?.let {
-            dividerItemDecoration.setDrawable(it)
-        }
-        binding.recyclerViewCrypto.addItemDecoration(dividerItemDecoration)
-
         return binding.root
     }
 
@@ -51,7 +44,13 @@ class ListFragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view, savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)//xmlden nasıl divider ekleyebilrim
+        var dividerItemDecoration= DividerItemDecoration(requireContext(),RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable,null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.recyclerViewCrypto.addItemDecoration(dividerItemDecoration)
+
         liveDataObserver()
         refreshApiData()
         setSearchBar()

@@ -39,53 +39,50 @@ class LoginFragment : Fragment() {
     ) {
         with(binding){
             buttonGiris.setOnClickListener {
-                loginUser()
+                authenticateUser(true)
             }
             buttonKayit.setOnClickListener {
-                registerUser()
+                authenticateUser(false)
             }
         }
-    }//cvs dosyaları nasıl okunur
-
-    private fun loginUser() {//registerla birleştirme için araştır
-        val email = binding.emailEditText.text.toString()
-        val password = binding.passwordEditText.text.toString()
-
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "signInWithEmail:success")
-                    navigateToListFragment()
-                } else {
-                    val exception = task.exception
-                    Log.d(TAG, "signInWithEmail:failure", exception)
-                    Toast.makeText(
-                        requireContext(),
-                        "Giriş işlemi başarısız: ${exception?.message}",
-                        Toast.LENGTH_LONG,
-                    ).show()
-                }
-            }
     }
 
-    private fun registerUser() {
+    private fun authenticateUser(isLogin: Boolean) {
         val email = binding.emailEditText.text.toString()
         val password = binding.passwordEditText.text.toString()
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "createUserWithEmail:success")
-                } else {
-                    val exception = task.exception
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        requireContext(),
-                        "Kayıt işlemi başarısız: ${exception?.message}",
-                        Toast.LENGTH_LONG,
-                    ).show()
+        if (isLogin) {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "signInWithEmail:success")
+                        navigateToListFragment()
+                    } else {
+                        val exception = task.exception
+                        Log.d(TAG, "signInWithEmail:failure", exception)
+                        Toast.makeText(
+                            requireContext(),
+                            "Giriş işlemi başarısız: ${exception?.message}",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
                 }
-            }
+        } else {
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "createUserWithEmail:success")
+                    } else {
+                        val exception = task.exception
+                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        Toast.makeText(
+                            requireContext(),
+                            "Kayıt işlemi başarısız: ${exception?.message}",
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    }
+                }
+        }
     }
 
     private fun navigateToListFragment() {

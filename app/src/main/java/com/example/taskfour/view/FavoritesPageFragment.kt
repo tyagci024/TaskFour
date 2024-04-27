@@ -20,36 +20,39 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavoritesPageFragment : Fragment() {
-    private lateinit var binding:FragmentFavoritesPageBinding
-    private lateinit var adapter : Adapter
+    private lateinit var binding: FragmentFavoritesPageBinding
+    private lateinit var adapter: Adapter
     private val viewModel: CoinListViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-        ): View? {
-        binding=FragmentFavoritesPageBinding.inflate(inflater,container,false)
+    ): View? {
+        binding = FragmentFavoritesPageBinding.inflate(inflater, container, false)
         binding.recyclerViewFav.layoutManager = LinearLayoutManager(requireContext())
-        var dividerItemDecoration= DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable,null)?.let {
-            dividerItemDecoration.setDrawable(it)
-        }
-        binding.recyclerViewFav.addItemDecoration(dividerItemDecoration)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.divider_drable, null)?.let {
+            dividerItemDecoration.setDrawable(it)
+        }
+        binding.recyclerViewFav.addItemDecoration(dividerItemDecoration)
         newsObserver()
         refreshApiData()
     }
+
     private fun newsObserver() {
         viewModel.allDataFavorite.observe(viewLifecycleOwner) { newsList ->
             adapter = Adapter(newsList)
             binding.recyclerViewFav.adapter = adapter
             adapter.onItemClickListener = { cryptoModel ->
-                   val action =
-                FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailFragment(cryptoModel)
+                val action =
+                    FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailFragment(
+                        cryptoModel
+                    )
                 findNavController().navigate(action)
             }
         }

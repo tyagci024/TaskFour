@@ -57,7 +57,6 @@ class FirestoreCoinFragment : Fragment() {
     fun fetchUserCoinsFromFirestore(): LiveData<List<CryptoModel>> {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
-        // LiveData döndürmek için MutableLiveData kullanabilirsiniz.
         val userCoinsLiveData = MutableLiveData<List<CryptoModel>>()
 
         currentUser?.let { user ->
@@ -89,7 +88,7 @@ class FirestoreCoinFragment : Fragment() {
         coinData?.let { data ->
             return try {
                 CryptoModel(
-                    coinId = data["coinid"] as Int,
+                    coinId = 0,
                     id = data["id"] as String,
                     name = data["name"] as String,
                     symbol = (data["symbol"] as String).uppercase(),
@@ -98,8 +97,7 @@ class FirestoreCoinFragment : Fragment() {
                     low24h = (data["low24h"] as String).toDouble(),
                     lastUpdated = data["lastupdate"] as String,
                     priceChangePercentage24H = data["priceChange"] as Double,
-                    image = data["image"] as String
-                )
+                    image = data["image"] as String)
             } catch (e: Exception) {
                 println("Coin verilerini oluştururken bir hata oluştu: ${e.message}")
                 null

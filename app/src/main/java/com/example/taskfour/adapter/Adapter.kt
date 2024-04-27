@@ -24,7 +24,8 @@ class Adapter(private var cryptoList: List<CryptoModel>) :
         holder.itemView.setOnClickListener {
             onItemClickListener?.invoke(crypto)
         }
-    }
+    }//infinite scroll
+    //setitemrecycle false
 
     override fun getItemCount() = cryptoList.size
 

@@ -22,19 +22,33 @@
         android:padding="@dimen/dp_8"
         android:paddingLeft="@dimen/dp_8">
 
+
+        <ImageView
+            android:id="@+id/imageViewFavStar"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:src="@drawable/star"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginEnd="@dimen/dp_4"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linearLayout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/textviewName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:textSize="@dimen/sp_20"
+                android:maxLines="1"
                 android:textStyle="bold"
                 tools:text="@string/coin_name" />
 
@@ -47,12 +61,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
+            android:layout_marginEnd="@dimen/dp_8"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewFavStar"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
