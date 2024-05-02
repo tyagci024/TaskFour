@@ -13,7 +13,7 @@ class TaskFourRepository @Inject constructor(
     private val cryptoDao: CryptoDao
 ) {
     suspend fun getAllCoin() = api.getList()
-    fun getAllNews() = apiNews.getAllNews()
+    suspend fun getAllNews() = apiNews.getAllNews()
     suspend fun insertCrypto(crypto: CryptoModel) {
         cryptoDao.insertCrypto(crypto)
     }
