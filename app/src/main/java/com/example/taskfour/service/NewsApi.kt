@@ -8,5 +8,5 @@ interface NewsApi {
     // https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json
 
     @GET("tyagci024/pharmcy/main/news.json")
-    fun getAllNews(): List<NewsItem>
+    suspend fun getAllNews(): List<NewsItem>
 }
