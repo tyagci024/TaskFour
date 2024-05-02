@@ -39,7 +39,11 @@
         android:id="@+id/newsPageFragment"
         android:name="com.example.taskfour.view.NewsPageFragment"
         android:label="Haberler"
-        tools:layout="@layout/fragment_news_page" />
+        tools:layout="@layout/fragment_news_page" >
+        <action
+            android:id="@+id/action_newsPageFragment_to_webViewFragment"
+            app:destination="@id/webViewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.taskfour.view.LoginFragment"
@@ -58,4 +62,16 @@
             android:id="@+id/action_firestoreCoinFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/webViewFragment"
+        android:name="com.example.taskfour.view.WebViewFragment"
+        android:label="fragment_web_view"
+        tools:layout="@layout/fragment_web_view" >
+
+
+        <argument
+            android:name="News"
+            app:argType="com.example.taskfour.model.NewsItem" />
+    </fragment>
+
 </navigation>

@@ -9,17 +9,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskfour.ClickInterface
 import com.example.taskfour.R
 import com.example.taskfour.adapter.NewsAdapter
 import com.example.taskfour.databinding.FragmentNewsPageBinding
+import com.example.taskfour.model.NewsItem
 import com.example.taskfour.viewModel.NewsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsPageFragment : Fragment() {
+class NewsPageFragment : Fragment(), ClickInterface{
     private lateinit var binding: FragmentNewsPageBinding
     private val viewModelNews: NewsListViewModel by viewModels()
     private lateinit var adapter: NewsAdapter
@@ -52,11 +55,9 @@ class NewsPageFragment : Fragment() {
 
     private fun newsObserver() {
         viewModelNews.newsList.observe(viewLifecycleOwner) { newsList ->
-            adapter = NewsAdapter(newsList)
+            adapter = NewsAdapter(newsList,this)
             binding.recyclerViewNews.adapter = adapter
-            adapter.onItemClickListener = { sourceLink ->
-                openLinkInBrowser(sourceLink)
-            }
+
         }
         viewModelNews.loadingObs.observe(viewLifecycleOwner) {
             if (it) {
@@ -96,4 +97,11 @@ class NewsPageFragment : Fragment() {
             binding.swipeRefreshLay.isRefreshing = false
         }
     }
+
+    override fun onWebsiteClicked(newsItem: NewsItem, holder: NewsAdapter.ViewHolder) {
+        val action = NewsPageFragmentDirections.actionNewsPageFragmentToWebViewFragment(newsItem)
+        findNavController().navigate(action)
+    }
+
+
 }

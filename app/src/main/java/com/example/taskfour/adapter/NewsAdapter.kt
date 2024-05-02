@@ -3,14 +3,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.taskfour.ClickInterface
 import com.example.taskfour.databinding.NewsItemLayoutBinding
 import com.example.taskfour.model.NewsItem
 import com.example.taskfour.utilies.downloadFromURL
 
-class NewsAdapter(private val newsList: List<NewsItem>) :
+class NewsAdapter(private val newsList: List<NewsItem>,private val clickInterface: ClickInterface) :
     RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
-    var onItemClickListener: ((String) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =NewsItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
@@ -18,8 +18,11 @@ class NewsAdapter(private val newsList: List<NewsItem>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val newsItem = newsList[position]
-
         holder.bind(newsItem)
+        holder.binding.textViewWebSite.setOnClickListener {
+            clickInterface.onWebsiteClicked(newsItem,holder)
+        }
+
     }
 
     override fun getItemCount(): Int {
@@ -28,14 +31,15 @@ class NewsAdapter(private val newsList: List<NewsItem>) :
 
     inner class ViewHolder(val binding: NewsItemLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(news: NewsItem) {
             binding.apply {
                 textViewTitle.text = news.title
-                textViewSource.text=news.source
+                textViewSource.text = news.source
+                textViewWebSite.text=news.shareURL
                 imageViewThumbnail.downloadFromURL(news.imgUrl.toString())
-                root.setOnClickListener {
-                    onItemClickListener?.invoke(news.sourceLink)
-                }
+
+
             }
         }
     }
