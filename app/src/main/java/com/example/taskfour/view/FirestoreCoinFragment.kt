@@ -19,6 +19,7 @@ import com.example.taskfour.databinding.FragmentFavoritesPageBinding
 import com.example.taskfour.databinding.FragmentFirestoreCoinBinding
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.viewModel.CoinListViewModel
+import com.example.taskfour.viewModel.FirestoreViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -28,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FirestoreCoinFragment : Fragment() {
     private lateinit var binding:FragmentFirestoreCoinBinding
     private lateinit var adapter: Adapter
-    private val firestore = FirebaseFirestore.getInstance()
+    private val viewModelFire:FirestoreViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,65 +47,11 @@ class FirestoreCoinFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchUserCoinsFromFirestore()
+        viewModelFire.fetchUserCoinsFromFirestore()
             .observe(viewLifecycleOwner) { userCoins ->
                 adapter = Adapter(userCoins)
                 binding.recyclerViewFav.adapter = adapter
                 println("Firestore'dan alınan coin listesi: $userCoins")
             }
-    }
-
-    fun fetchUserCoinsFromFirestore(): LiveData<List<CryptoModel>> {
-        val currentUser = FirebaseAuth.getInstance().currentUser
-
-        val userCoinsLiveData = MutableLiveData<List<CryptoModel>>()
-
-        currentUser?.let { user ->
-            firestore.collection("kullanıcılar").document(user.email.toString())
-                .collection("coins")
-                .get()
-                .addOnSuccessListener { documents ->
-                    val userCoinsList = mutableListOf<CryptoModel>()
-                    for (document in documents) {
-                        val coinData = document.data
-                        val crypto = createCryptoModelFromCoinData(coinData)
-                        crypto?.let {
-                            userCoinsList.add(it)
-                        }
-                    }
-                    userCoinsLiveData.value = userCoinsList
-                }
-                .addOnFailureListener { e ->
-                    println("Firestore'dan coins çekerken bir hata oluştu: ${e.message}")
-                }
-        } ?: run {
-            println("Kullanıcı oturum açmamış, Firestore'dan veri çekme işlemi gerçekleştirilemedi.")
-        }
-
-        return userCoinsLiveData
-    }
-
-    fun createCryptoModelFromCoinData(coinData: Map<String, Any>?): CryptoModel? {
-        coinData?.let { data ->
-            return try {
-                CryptoModel(
-                    coinId = 0,
-                    id = data["id"] as String,
-                    name = data["name"] as String,
-                    symbol = (data["symbol"] as String).uppercase(),
-                    currentPrice = (data["price"] as String).toDouble(),
-                    high24h = (data["high24h"] as String).toDouble(),
-                    low24h = (data["low24h"] as String).toDouble(),
-                    lastUpdated = data["lastupdate"] as String,
-                    priceChangePercentage24H = data["priceChange"] as Double,
-                    image = data["image"] as String)
-            } catch (e: Exception) {
-                println("Coin verilerini oluştururken bir hata oluştu: ${e.message}")
-                null
-            }
-        } ?: run {
-            println("Coin verileri boş veya null.")
-            return null
-        }
     }
 }
