@@ -30,7 +30,7 @@ class CoinListViewModel @Inject constructor(application: Application, private va
     init {
         fetchData()
         allDataFavorite = repository.getAllCrypto()
-    }
+    }//yükleme olana kadar loading
     fun fetchData() {
         viewModelScope.launch {
             loading.value = true

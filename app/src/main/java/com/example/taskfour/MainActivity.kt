@@ -10,6 +10,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.example.taskfour.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNW=binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 
-       //setupActionBarWithNavController(navController)
+        //setupActionBarWithNavController(navController)
         setSupportActionBar(null)
         bottomNW.setOnItemSelectedListener { item ->
             when (item.itemId) {

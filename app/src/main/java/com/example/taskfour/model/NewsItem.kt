@@ -1,7 +1,10 @@
 package com.example.taskfour.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class NewsItem(
     @SerializedName("id") val id: String,
     @SerializedName("searchKeyWords") val searchKeyWords: List<String>,
@@ -15,4 +18,4 @@ data class NewsItem(
     @SerializedName("relatedCoins") val relatedCoins: List<String>,
     @SerializedName("content") val hasContent: Boolean,
     @SerializedName("link") val link: String?,
-    @SerializedName("bigImg") val hasBigImage: Boolean)
+    @SerializedName("bigImg") val hasBigImage: Boolean):Parcelable
