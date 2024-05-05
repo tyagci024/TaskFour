@@ -11,6 +11,7 @@ import com.example.taskfour.R
 import com.example.taskfour.databinding.FragmentDetailBinding
 import com.example.taskfour.utilies.downloadFromURL
 import com.example.taskfour.viewModel.DetailViewModel
+import com.example.taskfour.viewModel.FirestoreViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,7 +23,7 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val args by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
-    private val firestore = FirebaseFirestore.getInstance()
+    private val viewModelFire: FirestoreViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +43,13 @@ class DetailFragment : Fragment() {
             textViewHigh24h.text = args.currentCoin.high24h.toString()
             textViewLow24h.text = args.currentCoin.low24h.toString()
             imageViewFavIconFire.setOnClickListener {
-                viewModel.addCoinToFirestore(args.currentCoin)
+                    viewModel.addCoinToFirestore(args.currentCoin)
+            }
+            val currentCoinExists = viewModelFire.userCoinsLiveData.value?.any { it.id == args.currentCoin.id } ?: false
+            if (currentCoinExists) {
+                imageViewFavIcon.setImageResource(R.drawable.firebaseon)
+            } else {
+                imageViewFavIcon.setImageResource(R.drawable.firebaseoff)
             }
             viewModel.isCoinlInDatabase(args.currentCoin.id).observe(viewLifecycleOwner) { isCoinInDatabase ->
                 if (isCoinInDatabase) {
@@ -50,7 +57,8 @@ class DetailFragment : Fragment() {
                     imageViewFavIcon.setOnClickListener {
                         viewModel.deleteCrypto(args.currentCoin.id)
                     }
-                } else {
+                }
+            else {
                     imageViewFavIcon.setImageResource(R.drawable.star)
                     imageViewFavIcon.setOnClickListener {
                         viewModel.insertCrypto(args.currentCoin)
