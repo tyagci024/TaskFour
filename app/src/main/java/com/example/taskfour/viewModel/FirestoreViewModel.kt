@@ -18,6 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class FirestoreViewModel @Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
     private val firestore = FirebaseFirestore.getInstance()
+    val userCoinsLiveData = MutableLiveData<List<CryptoModel>>()
+
 
     init {
         fetchUserCoinsFromFirestore()
@@ -47,8 +49,6 @@ class FirestoreViewModel @Inject constructor(application: Application, private v
     }
     fun fetchUserCoinsFromFirestore(): LiveData<List<CryptoModel>> {
         val currentUser = FirebaseAuth.getInstance().currentUser
-
-        val userCoinsLiveData = MutableLiveData<List<CryptoModel>>()
 
         currentUser?.let { user ->
             firestore.collection("kullanıcılar").document(user.email.toString())
