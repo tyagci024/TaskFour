@@ -11,9 +11,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.work.Constraints
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequest
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.example.taskfour.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -28,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
 
@@ -37,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         val bottomNW=binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 
+        myWorkManager()
         //setupActionBarWithNavController(navController)
         setSupportActionBar(null)
         bottomNW.setOnItemSelectedListener { item ->
@@ -67,6 +76,23 @@ class MainActivity : AppCompatActivity() {
         }
         hideNavBars()
     }
+
+    private fun myWorkManager() {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(false)
+            .setRequiredNetworkType(NetworkType.NOT_REQUIRED)
+            .setRequiresCharging(false)
+            .setRequiresBatteryNotLow(true)
+            .build()
+
+        val myRequest= PeriodicWorkRequest.Builder(NotificationWorker::class.java,15,TimeUnit.MINUTES)
+            .setConstraints(constraints)
+            .build()
+
+        WorkManager.getInstance(this)
+            .enqueueUniquePeriodicWork("my_id",ExistingPeriodicWorkPolicy.KEEP,myRequest)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true

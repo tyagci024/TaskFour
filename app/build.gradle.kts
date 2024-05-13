@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.taskfour"
-        minSdk = 24
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -51,6 +51,9 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore:24.11.1")
     kapt ("androidx.room:room-compiler:2.6.1")
     androidTestImplementation ("androidx.room:room-testing:2.6.1" )
+
+    implementation ("androidx.work:work-runtime-ktx:2.9.0")
+
 
     // Dagger Hilt dependencies
     implementation ("com.google.dagger:hilt-android:2.51.1")
