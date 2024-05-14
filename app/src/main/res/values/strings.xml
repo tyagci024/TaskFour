@@ -11,4 +11,9 @@
     <string name="current_price">$%s</string>
     <string name="search_edit">Search</string>
     <string name="last_updated_header">Last Updated</string>
+    <string name="crypto_rat">Crypto Rat</string>
+    <string name="email_hint">E-posta</string>
+    <string name="password_hint">Şifre</string>
+    <string name="login_button">Giriş Yap</string>
+    <string name="register_button">Kayıt Ol</string>
 </resources>
