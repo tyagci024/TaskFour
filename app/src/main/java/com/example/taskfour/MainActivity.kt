@@ -8,6 +8,7 @@ import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -39,15 +40,17 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
 
-        val navHostFragment=supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        navController=navHostFragment.navController
 
-        val bottomNW=binding.bottomNavigationView
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
+        navController = navHostFragment.navController
+
+        val bottomNW = binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 
         myWorkManager()
-        //setupActionBarWithNavController(navController)
-        setSupportActionBar(null)
+        setupActionBarWithNavController(navController)
+        // setSupportActionBar(null)
         bottomNW.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.loginFragment -> {
@@ -55,22 +58,27 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNavigationView.visibility = View.GONE
                     true
                 }
+
                 R.id.firestoreCoinFragment -> {
                     navController.navigate(R.id.firestoreCoinFragment)
                     true
                 }
+
                 R.id.navigation_all -> {
                     navController.navigate(R.id.listFragment)
                     true
                 }
+
                 R.id.navigation_favorites -> {
                     navController.navigate(R.id.favoritesPageFragment)
                     true
                 }
+
                 R.id.navigation_news -> {
                     navController.navigate(R.id.newsPageFragment)
                     true
                 }
+
                 else -> false
             }
         }
@@ -85,12 +93,13 @@ class MainActivity : AppCompatActivity() {
             .setRequiresBatteryNotLow(true)
             .build()
 
-        val myRequest= PeriodicWorkRequest.Builder(NotificationWorker::class.java,15,TimeUnit.MINUTES)
-            .setConstraints(constraints)
-            .build()
+        val myRequest =
+            PeriodicWorkRequest.Builder(NotificationWorker::class.java, 15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build()
 
         WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork("my_id",ExistingPeriodicWorkPolicy.KEEP,myRequest)
+            .enqueueUniquePeriodicWork("my_id", ExistingPeriodicWorkPolicy.KEEP, myRequest)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -99,17 +108,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_logout -> {
-                FirebaseAuth.getInstance().signOut()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        if (item.itemId == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut()
+            navController.navigate(R.id.loginFragment)
         }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        //return navController.navigateUp() || super.onSupportNavigateUp()
         return navController.navigateUp()
     }
 
