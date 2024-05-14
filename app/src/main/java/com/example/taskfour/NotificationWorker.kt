@@ -62,9 +62,9 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
         ) {
             // İzin iste
             ActivityCompat.requestPermissions(
-                applicationContext as MainActivity, // Bu, bildirimi göndermek istediğiniz etkinliğin adı olmalı
+                applicationContext as MainActivity,
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
-                REQUEST_CODE // İzin isteğiniz için bir istek kodu belirtin, bu kod sonradan kullanılacak
+                REQUEST_CODE
             )
         } else {
             // İzin zaten verilmiş, bildirimi gönder
