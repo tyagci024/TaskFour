@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16"
+    android:paddingTop="@dimen/dp_64"
+    android:paddingBottom="@dimen/sp_64"
     tools:context=".view.LoginFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/loginCardView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="32dp"
-        android:elevation="166dp"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="@dimen/dp_0"
         app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="80dp"
+        app:cardCornerRadius="@dimen/dp_75"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,10 +27,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical"
-            android:paddingStart="16dp"
-            android:paddingTop="138dp"
-            android:paddingEnd="16dp"
-            android:paddingBottom="138dp"
+            android:padding="@dimen/dp_16"
             app:layout_constraintBottom_toTopOf="@id/loginCardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/dp_8"
-                android:text="TaskFour"
+                android:text="@string/crypto_rat"
                 android:textColor="@color/dark_blue"
                 android:textSize="@dimen/sp_32"
                 android:textStyle="bold|italic" />
@@ -47,37 +46,37 @@
                 android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="@dimen/dp_24"
                 android:background="@drawable/edittext_bg"
-                android:hint="E-posta"
+                android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
-                android:padding="8dp" />
+                android:padding="@dimen/dp_8" />
 
             <EditText
                 android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="@dimen/dp_24"
                 android:background="@drawable/edittext_bg"
-                android:hint="Şifre"
+                android:hint="@string/password_hint"
                 android:inputType="textPassword"
-                android:padding="8dp" />
+                android:padding="@dimen/dp_8" />
 
             <Button
                 android:id="@+id/buttonGiris"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/dark_blue"
-                android:text="Giriş Yap"
+                android:text="@string/login_button"
                 android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/buttonKayit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/dp_8"
                 android:backgroundTint="@color/dark_blue"
-                android:text="Kayıt Ol"
+                android:text="@string/register_button"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
