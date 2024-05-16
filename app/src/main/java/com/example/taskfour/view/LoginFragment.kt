@@ -22,7 +22,7 @@ class LoginFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = FirebaseAuth.getInstance()
-        if(auth.currentUser!=null){
+        if (auth.currentUser != null) {
             findNavController().navigate(R.id.action_loginFragment_to_listFragment)
         }
     }
@@ -40,7 +40,7 @@ class LoginFragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        with(binding){
+        with(binding) {
             buttonGiris.setOnClickListener {
                 authenticateUser(true)
             }
@@ -58,14 +58,12 @@ class LoginFragment : Fragment() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
-                        Log.d(TAG, "signInWithEmail:success")
                         navigateToListFragment()
                     } else {
                         val exception = task.exception
-                        Log.d(TAG, "signInWithEmail:failure", exception)
                         Toast.makeText(
                             requireContext(),
-                            "Giriş işlemi başarısız: ${exception?.message}",
+                            " ${exception?.message}",
                             Toast.LENGTH_LONG,
                         ).show()
                     }
@@ -74,13 +72,11 @@ class LoginFragment : Fragment() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
-                        Log.d(TAG, "createUserWithEmail:success")
                     } else {
                         val exception = task.exception
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
                         Toast.makeText(
                             requireContext(),
-                            "Kayıt işlemi başarısız: ${exception?.message}",
+                            "${exception?.message}",
                             Toast.LENGTH_LONG,
                         ).show()
                     }
@@ -90,9 +86,5 @@ class LoginFragment : Fragment() {
 
     private fun navigateToListFragment() {
         findNavController().navigate(R.id.action_loginFragment_to_listFragment)
-    }
-
-    companion object {
-        private const val TAG = "LoginFragment"
     }
 }

@@ -96,7 +96,6 @@ class ListFragment : Fragment() {
 
         viewModel.errorObs.observe(viewLifecycleOwner, { errorMessage ->
             Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
-            Log.d("error", errorMessage)
         })
     }
 

@@ -49,7 +49,7 @@ class CoinListViewModel @Inject constructor(
                     }
                 }
             } catch (e: Exception) {
-                error.value = "Veriler yüklenirken bir hata oluştu: ${e.message}"
+                error.value = "${e.message}"
                 callback?.invoke(false)
             }
         }

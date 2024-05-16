@@ -51,7 +51,6 @@ class FirestoreCoinFragment : Fragment() {
             .observe(viewLifecycleOwner) { userCoins ->
                 adapter = Adapter(userCoins)
                 binding.recyclerViewFav.adapter = adapter
-                println("Firestore'dan alınan coin listesi: $userCoins")
             }
     }
 }

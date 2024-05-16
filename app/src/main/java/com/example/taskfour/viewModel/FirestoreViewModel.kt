@@ -23,7 +23,6 @@ class FirestoreViewModel @Inject constructor(
     private val firestore = FirebaseFirestore.getInstance()
     val userCoinsLiveData = MutableLiveData<List<CryptoModel>>()
 
-
     init {
         fetchUserCoinsFromFirestore()
     }
@@ -44,7 +43,7 @@ class FirestoreViewModel @Inject constructor(
                     image = data["image"] as String,
                 )
             } catch (e: Exception) {
-                println("Coin verilerini oluştururken bir hata oluştu: ${e.message}")
+                println(" ${e.message}")
                 null
             }
         } ?: run {
@@ -71,7 +70,6 @@ class FirestoreViewModel @Inject constructor(
                     }
                     viewModelScope.launch {
                         val result = repository.getAllCoin()
-                        Log.d("CoinListViewModel", "Fetched data size: ${result.size}")
 
                         for (apiCrypto in result) {
                             val matchingCrypto = userCoinsList.find { it.id == apiCrypto.id }
@@ -83,7 +81,7 @@ class FirestoreViewModel @Inject constructor(
                     }
                 }
                 .addOnFailureListener { e ->
-                    println("Firestore'dan coins çekerken bir hata oluştu: ${e.message}")
+                    println("${e.message}")
                 }
         } ?: run {
             println("Kullanıcı oturum açmamış, Firestore'dan veri çekme işlemi gerçekleştirilemedi.")

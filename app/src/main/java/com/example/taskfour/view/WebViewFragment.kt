@@ -17,7 +17,7 @@ class WebViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding=FragmentWebViewBinding.inflate(inflater,container,false)
+        binding = FragmentWebViewBinding.inflate(inflater, container, false)
         return binding.root
     }
 

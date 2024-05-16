@@ -18,7 +18,6 @@ import hilt_aggregated_deps._com_example_taskfour_MainActivity_GeneratedInjector
 
 class NotificationWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
-        Log.d("not", "bildirimm")
         showNotif()
         return Result.success()
     }
@@ -33,15 +32,15 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
 
         val notificationCompat = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.enabled_fav_star)
-            .setContentTitle("MIUMCOIN SHAKED!")
-            .setContentText("Tap to see")
+            .setContentTitle(applicationContext.getString(R.string.notification_title))
+            .setContentText(applicationContext.getString(R.string.notification_text))
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)
             .setContentIntent(pendingIntent)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelName = "Channel Name"
-            val channelDescription = "Channel Description"
+            val channelName = applicationContext.getString(R.string.channel_name)
+            val channelDescription = applicationContext.getString(R.string.channel_description)
             val channelImportance = NotificationManager.IMPORTANCE_HIGH
 
             val channel = NotificationChannel(CHANNEL_ID, channelName, channelImportance).apply {
@@ -71,7 +70,6 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
             }
         }
     }
-
     companion object {
         const val CHANNEL_ID = "channel_id"
         const val BILDIRIM_ID = 1

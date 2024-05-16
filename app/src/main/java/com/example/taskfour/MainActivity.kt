@@ -93,34 +93,34 @@ class MainActivity : AppCompatActivity() {
             .setRequiresBatteryNotLow(true)
             .build()
 
-        val myRequest =//ses gidiyor abi anlıyamıyorum
+        val myRequest =
             PeriodicWorkRequest.Builder(NotificationWorker::class.java, 15, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
 
         WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork("my_id", ExistingPeriodicWorkPolicy.KEEP, myRequest)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+            .enqueueUniquePeriodicWork(getString(R.string.my_work_id), ExistingPeriodicWorkPolicy.KEEP, myRequest)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_logout) {
             AlertDialog.Builder(this)
-                .setTitle("Çıkış Yap")
-                .setMessage("Çıkış yapmak istiyor musunuz?")
-                .setPositiveButton("Evet") { dialog, which ->
+                .setTitle(getString(R.string.logout_title))
+                .setMessage(getString(R.string.logout_message))
+                .setPositiveButton(getString(R.string.logout_positive_button)) { dialog, which ->
                     FirebaseAuth.getInstance().signOut()
                     navController.navigate(R.id.loginFragment)
                 }
-                .setNegativeButton("Hayır", null)
+                .setNegativeButton(getString(R.string.logout_negative_button), null)
                 .show()
             return true
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {

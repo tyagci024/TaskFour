@@ -65,7 +65,7 @@ class DetailViewModel @Inject constructor(
                     println("Coin başarıyla Firestore'a eklendi.")
                 }
                 .addOnFailureListener { e ->
-                    println("Coin Firestore'a eklenirken bir hata oluştu: ${e.message}")
+                    println("${e.message}")
                 }
         } ?: run {
             println("Kullanıcı oturum açmamış, Firestore'a ekleme işlemi gerçekleştirilemedi.")

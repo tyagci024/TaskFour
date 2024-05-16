@@ -19,4 +19,14 @@
     <string name="coin_added_success">Coin başarıyla Firestore\'a eklendi.</string>
     <string name="coin_add_failure">Coin Firestore\'a eklenirken bir hata oluştu: %s</string>
     <string name="user_not_logged_in">Kullanıcı oturum açmamış, Firestore\'a ekleme işlemi gerçekleştirilemedi.</string>
+    <string name="notification_title">MIUMCOIN SHAKED!</string>
+    <string name="notification_text">Tap to see</string>
+    <string name="channel_name">Channel Name</string>
+    <string name="channel_description">Channel Description</string>
+    <string name="logout_title">Çıkış Yap</string>
+    <string name="logout_message">Çıkış yapmak istiyor musunuz?</string>
+    <string name="my_work_id">my_id</string>
+    <string name="logout_positive_button">Evet</string>
+    <string name="logout_negative_button">Hayır</string>
+
 </resources>
