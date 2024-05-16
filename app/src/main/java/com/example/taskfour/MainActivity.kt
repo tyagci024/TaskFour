@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
@@ -35,7 +36,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
 
         val toolbar: Toolbar = binding.toolbar
         setSupportActionBar(toolbar)
@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             .setRequiresBatteryNotLow(true)
             .build()
 
-        val myRequest =
+        val myRequest =//ses gidiyor abi anlıyamıyorum
             PeriodicWorkRequest.Builder(NotificationWorker::class.java, 15, TimeUnit.MINUTES)
                 .setConstraints(constraints)
                 .build()
@@ -109,21 +109,41 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.action_logout) {
-            FirebaseAuth.getInstance().signOut()
-            navController.navigate(R.id.loginFragment)
+            AlertDialog.Builder(this)
+                .setTitle("Çıkış Yap")
+                .setMessage("Çıkış yapmak istiyor musunuz?")
+                .setPositiveButton("Evet") { dialog, which ->
+                    FirebaseAuth.getInstance().signOut()
+                    navController.navigate(R.id.loginFragment)
+                }
+                .setNegativeButton("Hayır", null)
+                .show()
+            return true
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return navController.navigateUp()
+        val currentDestinationId = navController.currentDestination?.id
+        return if (currentDestinationId == R.id.listFragment && navController.graph.startDestinationId == R.id.loginFragment) {
+            false
+        } else {
+            navController.navigateUp()
+        }
     }
 
     private fun hideNavBars() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment -> binding.bottomNavigationView.visibility = View.GONE
-                else -> binding.bottomNavigationView.visibility = View.VISIBLE
+                R.id.loginFragment -> {
+                    binding.toolbar.visibility = View.GONE
+                    binding.bottomNavigationView.visibility = View.GONE
+                }
+
+                else -> {
+                    binding.toolbar.visibility = View.VISIBLE
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                }
             }
         }
     }

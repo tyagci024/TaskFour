@@ -17,7 +17,6 @@ import androidx.work.WorkerParameters
 import hilt_aggregated_deps._com_example_taskfour_MainActivity_GeneratedInjector
 
 class NotificationWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
-
     override fun doWork(): Result {
         Log.d("not", "bildirimm")
         showNotif()
@@ -30,8 +29,7 @@ class NotificationWorker(context: Context, params: WorkerParameters) : Worker(co
         }
         val pendingIntent = PendingIntent.getActivity(
             applicationContext, 0, intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
+            PendingIntent.FLAG_IMMUTABLE)
 
         val notificationCompat = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.enabled_fav_star)

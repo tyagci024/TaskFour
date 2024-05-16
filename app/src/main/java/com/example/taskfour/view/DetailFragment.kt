@@ -23,7 +23,6 @@ class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val args by navArgs<DetailFragmentArgs>()
     private val viewModel: DetailViewModel by viewModels()
-    private val viewModelFire: FirestoreViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,13 +42,7 @@ class DetailFragment : Fragment() {
             textViewHigh24h.text = args.currentCoin.high24h.toString()
             textViewLow24h.text = args.currentCoin.low24h.toString()
             imageViewFavIconFire.setOnClickListener {
-                    viewModel.addCoinToFirestore(args.currentCoin)
-            }
-            val currentCoinExists = viewModelFire.userCoinsLiveData.value?.any { it.id == args.currentCoin.id } ?: false
-            if (currentCoinExists) {
-                imageViewFavIcon.setImageResource(R.drawable.firebaseon)
-            } else {
-                imageViewFavIcon.setImageResource(R.drawable.firebaseoff)
+                viewModel.addCoinToFirestore(args.currentCoin)
             }
             viewModel.isCoinlInDatabase(args.currentCoin.id).observe(viewLifecycleOwner) { isCoinInDatabase ->
                 if (isCoinInDatabase) {
@@ -57,8 +50,7 @@ class DetailFragment : Fragment() {
                     imageViewFavIcon.setOnClickListener {
                         viewModel.deleteCrypto(args.currentCoin.id)
                     }
-                }
-            else {
+                } else {
                     imageViewFavIcon.setImageResource(R.drawable.star)
                     imageViewFavIcon.setOnClickListener {
                         viewModel.insertCrypto(args.currentCoin)
@@ -68,5 +60,5 @@ class DetailFragment : Fragment() {
         }
         binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
     }
-
 }
+

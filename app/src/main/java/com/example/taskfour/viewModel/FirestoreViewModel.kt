@@ -16,7 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FirestoreViewModel @Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
+class FirestoreViewModel @Inject constructor(
+    application: Application,
+    private val repository: TaskFourRepository
+) : AndroidViewModel(application) {
     private val firestore = FirebaseFirestore.getInstance()
     val userCoinsLiveData = MutableLiveData<List<CryptoModel>>()
 
@@ -24,6 +27,7 @@ class FirestoreViewModel @Inject constructor(application: Application, private v
     init {
         fetchUserCoinsFromFirestore()
     }
+
     fun createCryptoModelFromCoinData(coinData: Map<String, Any>?): CryptoModel? {
         coinData?.let { data ->
             return try {
@@ -37,7 +41,8 @@ class FirestoreViewModel @Inject constructor(application: Application, private v
                     low24h = (data["low24h"] as String).toDouble(),
                     lastUpdated = data["lastupdate"] as String,
                     priceChangePercentage24H = data["priceChange"] as Double,
-                    image = data["image"] as String)
+                    image = data["image"] as String,
+                )
             } catch (e: Exception) {
                 println("Coin verilerini oluştururken bir hata oluştu: ${e.message}")
                 null
@@ -47,6 +52,7 @@ class FirestoreViewModel @Inject constructor(application: Application, private v
             return null
         }
     }
+
     fun fetchUserCoinsFromFirestore(): LiveData<List<CryptoModel>> {
         val currentUser = FirebaseAuth.getInstance().currentUser
 
@@ -68,14 +74,12 @@ class FirestoreViewModel @Inject constructor(application: Application, private v
                         Log.d("CoinListViewModel", "Fetched data size: ${result.size}")
 
                         for (apiCrypto in result) {
-                            val matchingCrypto = userCoinsList?.find { it.id == apiCrypto.id }
+                            val matchingCrypto = userCoinsList.find { it.id == apiCrypto.id }
                             matchingCrypto?.let {
-                            it.currentPrice=apiCrypto.currentPrice
+                                it.currentPrice = apiCrypto.currentPrice
                             }
                         }
                         userCoinsLiveData.value = userCoinsList
-
-
                     }
                 }
                 .addOnFailureListener { e ->
@@ -87,5 +91,4 @@ class FirestoreViewModel @Inject constructor(application: Application, private v
 
         return userCoinsLiveData
     }
-
 }

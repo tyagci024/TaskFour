@@ -41,7 +41,6 @@ class FavoritesPageFragment : Fragment() {
         }
         binding.recyclerViewFav.addItemDecoration(dividerItemDecoration)
         newsObserver()
-        refreshApiData()
     }
 
     private fun newsObserver() {
@@ -51,17 +50,9 @@ class FavoritesPageFragment : Fragment() {
             adapter.onItemClickListener = { cryptoModel ->
                 val action =
                     FavoritesPageFragmentDirections.actionFavoritesPageFragmentToDetailFragment(
-                        cryptoModel
-                    )
+                        cryptoModel)
                 findNavController().navigate(action)
             }
-        }
-    }
-
-    private fun refreshApiData() {
-        binding.swipeRefreshLay.setOnRefreshListener {
-            viewModel.fetchData()
-            binding.swipeRefreshLay.isRefreshing = false
         }
     }
 }

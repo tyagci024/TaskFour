@@ -16,4 +16,7 @@
     <string name="password_hint">Şifre</string>
     <string name="login_button">Giriş Yap</string>
     <string name="register_button">Kayıt Ol</string>
+    <string name="coin_added_success">Coin başarıyla Firestore\'a eklendi.</string>
+    <string name="coin_add_failure">Coin Firestore\'a eklenirken bir hata oluştu: %s</string>
+    <string name="user_not_logged_in">Kullanıcı oturum açmamış, Firestore\'a ekleme işlemi gerçekleştirilemedi.</string>
 </resources>

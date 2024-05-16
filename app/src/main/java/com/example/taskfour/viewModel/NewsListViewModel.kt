@@ -42,6 +42,7 @@ class NewsListViewModel @Inject constructor(
             loading.value = false
         }
     }
+
     companion object {
         private const val TAG = "NewsListViewModel"
     }

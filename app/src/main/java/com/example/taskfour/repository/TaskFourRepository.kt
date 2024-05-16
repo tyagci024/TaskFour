@@ -31,4 +31,5 @@ class TaskFourRepository @Inject constructor(
     fun getAllCrypto(): LiveData<List<CryptoModel>> {
         return cryptoDao.getAllCryptos()
     }
+    suspend fun fetchAllData(page:Int) = api.getListCoin("usd",250,page.toString())
 }

@@ -22,7 +22,7 @@ import com.example.taskfour.viewModel.NewsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NewsPageFragment : Fragment(), ClickInterface{
+class NewsPageFragment : Fragment(), ClickInterface {
     private lateinit var binding: FragmentNewsPageBinding
     private val viewModelNews: NewsListViewModel by viewModels()
     private lateinit var adapter: NewsAdapter
@@ -34,8 +34,8 @@ class NewsPageFragment : Fragment(), ClickInterface{
     ): View {
         binding = FragmentNewsPageBinding.inflate(inflater, container, false)
         binding.recyclerViewNews.layoutManager = LinearLayoutManager(requireContext())
-        var dividerItemDecoration= DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources, R.drawable.divider_drable,null)?.let {
+        var dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.divider_drable, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
         binding.recyclerViewNews.addItemDecoration(dividerItemDecoration)
@@ -48,16 +48,10 @@ class NewsPageFragment : Fragment(), ClickInterface{
         refreshApiData()
     }
 
-    private fun openLinkInBrowser(link: String) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-        startActivity(intent)
-    }
-
     private fun newsObserver() {
         viewModelNews.newsList.observe(viewLifecycleOwner) { newsList ->
-            adapter = NewsAdapter(newsList,this)
+            adapter = NewsAdapter(newsList, this)
             binding.recyclerViewNews.adapter = adapter
-
         }
         viewModelNews.loadingObs.observe(viewLifecycleOwner) {
             if (it) {
@@ -75,7 +69,7 @@ class NewsPageFragment : Fragment(), ClickInterface{
             }
         }
         viewModelNews.errorObs.observe(viewLifecycleOwner) {
-            if (it=="true") {
+            if (it == "true") {
                 with(binding) {
                     progressBar.visibility = View.GONE
                     recyclerViewNews.visibility = View.VISIBLE
@@ -102,6 +96,4 @@ class NewsPageFragment : Fragment(), ClickInterface{
         val action = NewsPageFragmentDirections.actionNewsPageFragmentToWebViewFragment(newsItem)
         findNavController().navigate(action)
     }
-
-
 }

@@ -24,13 +24,8 @@ class WebViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val currentNews = args.News
-
         val webView = binding.webView
-
         webView.settings.javaScriptEnabled = true
-
-        webView.loadUrl(args.News.shareURL)
+        webView.loadUrl(currentNews.shareURL)
     }
-
-
 }

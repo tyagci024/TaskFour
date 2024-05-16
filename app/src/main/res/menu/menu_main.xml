@@ -3,7 +3,8 @@
     <item
         android:id="@+id/action_logout"
         android:title="Çıkış Yap"
-        android:iconTint="@color/white"
         android:icon="@drawable/pngeggq"
+        android:iconTint="@color/white"
+        android:titleTextColor="@color/white"
         app:showAsAction="ifRoom" />
 </menu>

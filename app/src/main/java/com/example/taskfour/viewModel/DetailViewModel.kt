@@ -6,9 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.repository.TaskFourRepository
-import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,13 +15,16 @@ import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailViewModel@Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
+class DetailViewModel @Inject constructor(
+    application: Application,
+    private val repository: TaskFourRepository
+) : AndroidViewModel(application) {
     var allDataFavorite: LiveData<List<CryptoModel>>
     private val firestore = FirebaseFirestore.getInstance()
+
     init {
         allDataFavorite = repository.getAllCrypto()
     }
-
     fun isCoinlInDatabase(symbol: String): LiveData<Boolean> {
         return repository.isCoinInDatabase(symbol)
     }
@@ -39,7 +40,8 @@ class DetailViewModel@Inject constructor(application: Application, private val r
             repository.deleteById(symbol)
         }
     }
-    fun addCoinToFirestore(crypto:CryptoModel) {
+
+    fun addCoinToFirestore(crypto: CryptoModel) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.let { user ->
             val coinData = hashMapOf(
@@ -69,5 +71,4 @@ class DetailViewModel@Inject constructor(application: Application, private val r
             println("Kullanıcı oturum açmamış, Firestore'a ekleme işlemi gerçekleştirilemedi.")
         }
     }
-
 }

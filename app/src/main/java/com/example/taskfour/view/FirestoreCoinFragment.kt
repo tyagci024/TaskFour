@@ -27,18 +27,18 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FirestoreCoinFragment : Fragment() {
-    private lateinit var binding:FragmentFirestoreCoinBinding
+    private lateinit var binding: FragmentFirestoreCoinBinding
     private lateinit var adapter: Adapter
-    private val viewModelFire:FirestoreViewModel by viewModels()
+    private val viewModelFire: FirestoreViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        binding= FragmentFirestoreCoinBinding.inflate(inflater,container,false)
+        binding = FragmentFirestoreCoinBinding.inflate(inflater, container, false)
         binding.recyclerViewFav.layoutManager = LinearLayoutManager(requireContext())
         var dividerItemDecoration= DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable,null)?.let {
+        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
         binding.recyclerViewFav.addItemDecoration(dividerItemDecoration)
