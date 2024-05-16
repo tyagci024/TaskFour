@@ -13,45 +13,45 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CoinListViewModel @Inject constructor(application: Application, private val repository: TaskFourRepository) : AndroidViewModel(application) {
-    var allDataFavorite: LiveData<List<CryptoModel>>
-
+class CoinListViewModel @Inject constructor(
+    application: Application,
+    private val repository: TaskFourRepository
+) : AndroidViewModel(application) {
+    var allDataFavorite: LiveData<List<CryptoModel>> = repository.getAllCrypto()
     private val cryptoList = MutableLiveData<List<CryptoModel>>()
-
     val cryptoListObs: LiveData<List<CryptoModel>>
         get() = cryptoList
     private val loading = MutableLiveData<Boolean>()
-    val loadingObs: LiveData<Boolean>
-        get() = loading
     private val error = MutableLiveData<String>()
     val errorObs: LiveData<String>
         get() = error
 
     init {
-        fetchData()
-        allDataFavorite = repository.getAllCrypto()
-    }//yükleme olana kadar loading
-    fun fetchData() {
-        viewModelScope.launch {
-            loading.value = true
-            try {
-                val result = repository.getAllCoin()
-                val allCrypto = allDataFavorite.value
-                Log.d("CoinListViewModel", "Fetched data size: ${result.size}")
+        fetchAllData(1)
+    }
 
-                for (apiCrypto in result) {
+    fun fetchAllData(page: Int, callback: ((Boolean) -> Unit)? = null) {
+        viewModelScope.launch {
+            try {
+                val response = repository.fetchAllData(page)
+                val allCrypto = allDataFavorite.value
+                val coinList = response
+                val currentCoins = cryptoList.value ?: emptyList()
+                val updatedCoinssList = currentCoins.toMutableList()
+                updatedCoinssList.addAll(coinList)
+                cryptoList.value = updatedCoinssList
+                callback?.invoke(true)
+                for (apiCrypto in response) {
                     val matchingCrypto = allCrypto?.find { it.id == apiCrypto.id }
                     matchingCrypto?.let {
                         apiCrypto.id = it.id
                         repository.updateCrypto(apiCrypto)
                     }
                 }
-                cryptoList.value = result
-                error.value = "false"
             } catch (e: Exception) {
-                error.value = e.toString()
+                error.value = "Veriler yüklenirken bir hata oluştu: ${e.message}"
+                callback?.invoke(false)
             }
-            loading.value = false
         }
     }
 }

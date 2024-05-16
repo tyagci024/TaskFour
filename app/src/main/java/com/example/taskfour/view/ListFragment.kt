@@ -1,12 +1,15 @@
 package com.example.taskfour.view
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -18,18 +21,17 @@ import com.example.taskfour.adapter.Adapter
 import com.example.taskfour.databinding.FragmentListBinding
 import com.example.taskfour.model.CryptoModel
 import com.example.taskfour.viewModel.CoinListViewModel
-import com.example.taskfour.viewModel.NewsListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONArray
+
 @AndroidEntryPoint
 class ListFragment : Fragment() {
     private val viewModel: CoinListViewModel by viewModels()
     private lateinit var adapterCoin: Adapter
     private lateinit var binding: FragmentListBinding
     private lateinit var originalList: List<CryptoModel>
+    private var currentPage = 1
+    private var recyclerState: Parcelable? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,65 +46,61 @@ class ListFragment : Fragment() {
         view: View,
         savedInstanceState: Bundle?,
     ) {
-        super.onViewCreated(view, savedInstanceState)//xmlden nasıl divider ekleyebilrim
-        var dividerItemDecoration= DividerItemDecoration(requireContext(),RecyclerView.VERTICAL)
-        ResourcesCompat.getDrawable(resources,R.drawable.divider_drable,null)?.let {
+        super.onViewCreated(view, savedInstanceState)
+        var dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+        ResourcesCompat.getDrawable(resources, R.drawable.divider_drable, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
         binding.recyclerViewCrypto.addItemDecoration(dividerItemDecoration)
+        binding.recyclerViewCrypto.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = Adapter(emptyList())
+            var isLoading = false
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
+                    val totalItemCount = layoutManager.itemCount
 
-        liveDataObserver()
-        refreshApiData()
+                    if (!isLoading && lastVisibleItemPosition == totalItemCount - 1) {
+                        if (currentPage < 3) {
+                            isLoading = true
+                            currentPage++
+                            viewModel.fetchAllData(currentPage) { success ->
+                                isLoading = !success
+                            }
+                            Log.e("Tag", "$currentPage")
+                        }
+                    }
+                }
+            })
+        }
+
+        observeViewModel()
         setSearchBar()
     }
 
-    fun liveDataObserver() {
-        viewModel.cryptoListObs.observe(viewLifecycleOwner) {
-            it?.let {
-                originalList = it
-                adapterCoin = Adapter(it)
-                binding.recyclerViewCrypto.adapter = adapterCoin
-                adapterCoin.onItemClickListener = { cryptoModel ->
-                    val action =
-                        ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
-                    findNavController().navigate(action)
-                }
+    private fun observeViewModel() {
+        viewModel.cryptoListObs.observe(viewLifecycleOwner, { coins ->
+
+            adapterCoin = binding.recyclerViewCrypto.adapter as Adapter
+            adapterCoin.onItemClickListener = { cryptoModel ->
+                val action =
+                    ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                findNavController().navigate(action)
             }
-        }
-        viewModel.loadingObs.observe(viewLifecycleOwner) {
-            if (it) {
-                with(binding) {
-                    progressBar.visibility = View.VISIBLE
-                    recyclerViewCrypto.visibility = View.GONE
-                    textviewError.visibility = View.GONE
-                }
-            } else {
-                with(binding) {
-                    progressBar.visibility = View.GONE
-                    recyclerViewCrypto.visibility = View.VISIBLE
-                    textviewError.visibility = View.GONE
-                }
-            }
-        }
-        viewModel.errorObs.observe(viewLifecycleOwner) {
-            if (it=="false") {
-                with(binding) {
-                    progressBar.visibility = View.GONE
-                    recyclerViewCrypto.visibility = View.VISIBLE
-                    textviewError.visibility = View.GONE
-                }
-            } else {
-                with(binding) {
-                    progressBar.visibility = View.GONE
-                    recyclerViewCrypto.visibility = View.GONE
-                    textviewError.visibility = View.VISIBLE
-                    textviewError.text=it
-                }
-            }
-        }
+            adapterCoin.updateList(coins)
+            binding.recyclerViewCrypto.layoutManager?.onRestoreInstanceState(recyclerState)
+        })
+
+        viewModel.errorObs.observe(viewLifecycleOwner, { errorMessage ->
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+            Log.d("error", errorMessage)
+        })
     }
 
-    private fun setSearchBar(){
+    private fun setSearchBar() {
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(
                 s: CharSequence?,
@@ -131,10 +129,5 @@ class ListFragment : Fragment() {
             }
         })
     }
-    private fun refreshApiData(){
-        binding.swipeRefreshLay.setOnRefreshListener {
-            viewModel.fetchData()
-            binding.swipeRefreshLay.isRefreshing = false
-        }
-    }
 }
+
