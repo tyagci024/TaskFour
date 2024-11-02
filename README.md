@@ -1,0 +1,13 @@
+Kullanılan teknolojiler :
+-XML Layout UI Elements
+-Retrofit
+-Picasso
+-Hilt - Dagger
+-Gson
+-Coroutine
+-LiveData
+-Navigation Component
+-WorkManager
+-SQLite Room
+-Firebase Firestore
+-Firebase Authentication
