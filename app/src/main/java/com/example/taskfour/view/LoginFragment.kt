@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
                 authenticateUser(true)
             }
             buttonKayit.setOnClickListener {
-                authenticateUser(false)
+                findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
             }
         }
     }

@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
     private fun hideNavBars() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.viewPagerFragment,R.id.loginFragment -> {
+                R.id.viewPagerFragment,R.id.loginFragment,R.id.registerFragment -> {
                     binding.toolbar.visibility = View.GONE
                     binding.bottomNavigationView.visibility = View.GONE
                 }

@@ -10,7 +10,7 @@
     android:paddingEnd="@dimen/dp_16"
     android:paddingTop="@dimen/dp_64"
     android:paddingBottom="@dimen/sp_64"
-    tools:context=".view.LoginFragment">
+    tools:context=".view.RegisterFragment">
 
     <LinearLayout
         android:id="@+id/loginContentLayout"
@@ -25,15 +25,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.738">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dp_8"
-            android:text="@string/welcome_app"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sp_32"
-            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/emailEditText"
@@ -54,14 +45,15 @@
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:padding="@dimen/dp_8" />
-
-        <Button
-            android:id="@+id/buttonGiris"
+        <EditText
+            android:id="@+id/passwordControlEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/dark_blue"
-            android:text="@string/login_button"
-            android:textColor="#FFFFFF" />
+            android:layout_marginBottom="@dimen/dp_24"
+            android:background="@drawable/edittext_bg"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:padding="@dimen/dp_8" />
 
         <Button
             android:id="@+id/buttonKayit"
