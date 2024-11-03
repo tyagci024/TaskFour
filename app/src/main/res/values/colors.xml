@@ -10,4 +10,13 @@
     <color name="red">#FF001F</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#FFFF00</color>
+    <color name="cardBackground">#F5F5F5</color>
+    <color name="backgroundColor">#FFFFFF</color> <!-- Beyaz -->
+
+    <!-- Text Colors -->
+    <color name="textPrimary">#000000</color> <!-- Siyah -->
+    <color name="textAccent">#FF5722</color> <!-- Turuncu -->
+    <color name="textSecondary">#757575</color> <!-- Gri -->
+
+    <!-- Card Background -->
 </resources>

@@ -45,6 +45,21 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
+        val sharedPref = getSharedPreferences("onboarding_pref", MODE_PRIVATE)
+        val isFirstLaunch = sharedPref.getBoolean("isFirstLaunch", true)
+
+        if (isFirstLaunch) {
+            navController.navigate(R.id.viewPagerFragment)
+
+            with(sharedPref.edit()) {
+                putBoolean("isFirstLaunch", false)
+                apply()
+            }
+        } else {
+            navController.navigate(R.id.listFragment)
+        }
+
+
         val bottomNW = binding.bottomNavigationView
         setupWithNavController(bottomNW, navController = navController)
 

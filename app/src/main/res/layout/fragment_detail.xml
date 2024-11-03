@@ -1,136 +1,260 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/detailConstraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/dp_32">
-
-    <ImageView
-        android:id="@+id/imageViewFavIcon"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/star" />
-
-    <ImageView
-        android:id="@+id/imageViewFavIconFire"
-        android:layout_width="@dimen/dp_32"
-        android:layout_height="@dimen/dp_32"
-        android:layout_marginTop="@dimen/dp_16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewFavIcon"
-        app:srcCompat="@drawable/firebaseon" />
-
-    <TextView
-        android:id="@+id/textViewCoinSymbol"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
-        android:textSize="@dimen/sp_32"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewFavIcon"
-        tools:text="BTC" />
-
-    <TextView
-        android:id="@+id/textViewCoinName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        android:textAlignment="center"
-        android:textSize="@dimen/sp_20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCoinSymbol"
-        tools:text="Bitcoin" />
-
-    <TextView
-        android:id="@+id/textViewPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_48"
-        android:textSize="@dimen/sp_64"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewCoinName"
-        tools:text="@string/price_header" />
-
-    <TextView
-        android:id="@+id/textViewLast24H"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_24"
-        android:text="Son 24 Saat"
-        android:textSize="@dimen/sp_20"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLast24H">
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/card_background"
+        android:layout_weight="2"
+        android:elevation="4dp">
 
         <ImageView
-            android:id="@+id/imageViewGreenArrow"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/sp_20"
-            android:layout_marginStart="@dimen/dp_8"
+            android:id="@+id/imageViewFavIcon"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/star" />
+
+        <ImageView
+            android:id="@+id/imageViewFavIconFire"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_marginTop="@dimen/dp_16"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imageViewFavIcon"
+            app:srcCompat="@drawable/firebaseon" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/green_arrow" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textViewLow24h"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:id="@+id/imageViewCoin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_75"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/textViewCoinSymbol"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/dp_16"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="BTC"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_16"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewCoinName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                android:layout_gravity="center"
+                android:text="Bitcoin"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="@dimen/sp_20" />
+
+            <TextView
+                android:id="@+id/textViewPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_8"
+                android:text="@string/price_header"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dp_24"
+                android:textStyle="bold" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPrice">
+
+                <ImageView
+                    android:id="@+id/imageViewGreenArrow"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/sp_20"
+                    android:layout_marginStart="@dimen/dp_8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/green_arrow" />
+
+                <TextView
+                    android:id="@+id/textViewLow24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_20"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageViewGreenArrow"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2354" />
+
+                <ImageView
+                    android:id="@+id/imageViewRedArrow"
+                    android:layout_width="@dimen/dp_16"
+                    android:layout_height="@dimen/dp_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/textViewLow24h"
+                    android:layout_marginStart="@dimen/dp_16"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/red_up" />
+
+                <TextView
+                    android:id="@+id/textViewHigh24h"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/sp_20"
+                    android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/imageViewRedArrow"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="2345" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/secondConstraint"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="@color/white"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_20"
+            android:orientation="vertical"
+            android:padding="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageViewGreenArrow"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2354" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageViewRedArrow"
-            android:layout_width="@dimen/dp_16"
-            android:layout_height="@dimen/dp_16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/textViewLow24h"
-            android:layout_marginStart="@dimen/dp_16"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/red_up" />
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewMarketCap"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
 
-        <TextView
-            android:id="@+id/textViewHigh24h"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/sp_20"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/imageViewRedArrow"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="2345" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textViewMarketCap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Piyasa Değeri: 235079791"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/textViewMarketCapRank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Piyasa Değeri Sıralaması: 251"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewValuation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textViewFullyDilutedValuation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tam Sulandırılmış Değerleme: 281870253"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/textViewTotalVolume"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Toplam Hacim: 2291236"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewPriceStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textViewPriceChange24h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24 Saatlik Fiyat Değişimi: -0.1263"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18" />
+
+                    <TextView
+                        android:id="@+id/textViewPriceChangePercentage24h"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="24 Saatlik Fiyat Değişim Yüzdesi: -4.67%"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sp_18" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageViewCoin"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_200"
-        android:scaleType="fitCenter"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

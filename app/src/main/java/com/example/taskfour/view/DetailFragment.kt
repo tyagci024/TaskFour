@@ -36,29 +36,30 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         with(binding){
-            textViewCoinName.text = args.currentCoin.name
-            textViewCoinSymbol.text = args.currentCoin.symbol.uppercase()
-            textViewPrice.text = getString(R.string.current_price, args.currentCoin.currentPrice.toString())
-            textViewHigh24h.text = args.currentCoin.high24h.toString()
-            textViewLow24h.text = args.currentCoin.low24h.toString()
-            imageViewFavIconFire.setOnClickListener {
-                viewModel.addCoinToFirestore(args.currentCoin)
-            }
-            viewModel.isCoinlInDatabase(args.currentCoin.id).observe(viewLifecycleOwner) { isCoinInDatabase ->
-                if (isCoinInDatabase) {
-                    imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
-                    imageViewFavIcon.setOnClickListener {
-                        viewModel.deleteCrypto(args.currentCoin.id)
-                    }
-                } else {
-                    imageViewFavIcon.setImageResource(R.drawable.star)
-                    imageViewFavIcon.setOnClickListener {
-                        viewModel.insertCrypto(args.currentCoin)
-                    }
-                }
-            }
-        }
-        binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
+           textViewCoinName.text = args.currentCoin.name
+           textViewCoinSymbol.text = args.currentCoin.symbol.uppercase()
+           textViewPrice.text = getString(R.string.current_price, args.currentCoin.currentPrice.toString())
+           textViewHigh24h.text = args.currentCoin.high24h.toString()
+           textViewLow24h.text = args.currentCoin.low24h.toString()
+           imageViewFavIconFire.setOnClickListener {
+               viewModel.addCoinToFirestore(args.currentCoin)
+           }
+           viewModel.isCoinlInDatabase(args.currentCoin.id).observe(viewLifecycleOwner) { isCoinInDatabase ->
+               if (isCoinInDatabase) {
+                   imageViewFavIcon.setImageResource(R.drawable.enabled_fav_star)
+                   imageViewFavIcon.setOnClickListener {
+                       viewModel.deleteCrypto(args.currentCoin.id)
+                   }
+               } else {
+                   imageViewFavIcon.setImageResource(R.drawable.star)
+                   imageViewFavIcon.setOnClickListener {
+                       viewModel.insertCrypto(args.currentCoin)
+                   }
+               }
+           }
+       }
+       binding.imageViewCoin.downloadFromURL(args.currentCoin.image)
+   }
     }
-}
+
 

@@ -5,6 +5,14 @@
     <string name="coin_name">Bitcoin</string>
     <string name="error_text">error</string>
     <string name="coin_symbol">Symbol</string>
+    <string name="market_cap">Piyasa Değeri: %1$s</string>
+    <string name="market_cap_rank">Piyasa Değeri Sıralaması: %1$s</string>
+    <string name="fully_diluted_valuation">Tam Sulandırılmış Değerleme: %1$s</string>
+    <string name="total_volume">Toplam Hacim: %1$s</string>
+    <string name="high_24h">24 Saatlik En Yüksek: %1$s</string>
+    <string name="low_24h">24 Saatlik En Düşük: %1$s</string>
+    <string name="price_change_24h">24 Saatlik Fiyat Değişimi: %1$s</string>
+    <string name="price_change_percentage_24h">24 Saatlik Fiyat Değişim Yüzdesi: %1$s</string>
     <string name="price_header">543865</string>
     <string name="high_24h_header">High 24h</string>
     <string name="low_24h_header">Low 24h</string>

@@ -47,7 +47,7 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-        var dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
+        val dividerItemDecoration = DividerItemDecoration(requireContext(), RecyclerView.VERTICAL)
         ResourcesCompat.getDrawable(resources, R.drawable.divider_drable, null)?.let {
             dividerItemDecoration.setDrawable(it)
         }
@@ -83,11 +83,12 @@ class ListFragment : Fragment() {
 
     private fun observeViewModel() {
         viewModel.cryptoListObs.observe(viewLifecycleOwner, { coins ->
+            // originalList'ı buradan başlatıyoruz
+            originalList = coins
 
             adapterCoin = binding.recyclerViewCrypto.adapter as Adapter
             adapterCoin.onItemClickListener = { cryptoModel ->
-                val action =
-                    ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
+                val action = ListFragmentDirections.actionListFragmentToDetailFragment(cryptoModel)
                 findNavController().navigate(action)
             }
             adapterCoin.updateList(coins)
@@ -129,4 +130,3 @@ class ListFragment : Fragment() {
         })
     }
 }
-

@@ -34,7 +34,7 @@ class Adapter(private var cryptoList: List<CryptoModel>) :
         fun bind(coin: CryptoModel) {
             binding.apply {
                 textviewName.text = coin.name
-                textViewCurrency.text = coin.currentPrice.toString()
+                textViewCurrency.text = String.format("%.2f $", coin.currentPrice)
                 textViewDailyPerc.text = "%${coin.priceChangePercentage24H}"
                 imageviewCoin.downloadFromURL(coin.image)
                 if (coin.priceChangePercentage24H > 0) {
