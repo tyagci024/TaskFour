@@ -31,8 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Thread.sleep(3000)
-        installSplashScreen()
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController = navHostFragment.navController
 
-      /*  val sharedPref = getSharedPreferences("onboarding_pref", MODE_PRIVATE)
+        val sharedPref = getSharedPreferences("onboarding_pref", MODE_PRIVATE)
         val isFirstLaunch = sharedPref.getBoolean("isFirstLaunch", true)
 
         if (isFirstLaunch) {
@@ -57,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             navController.navigate(R.id.listFragment)
-        }*/
+        }
 
 
         val bottomNW = binding.bottomNavigationView
@@ -150,7 +148,7 @@ class MainActivity : AppCompatActivity() {
     private fun hideNavBars() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.loginFragment -> {
+                R.id.viewPagerFragment,R.id.loginFragment -> {
                     binding.toolbar.visibility = View.GONE
                     binding.bottomNavigationView.visibility = View.GONE
                 }

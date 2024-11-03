@@ -49,6 +49,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:22.3.1")
     implementation("com.google.firebase:firebase-database:20.3.1")
     implementation("com.google.firebase:firebase-firestore:24.11.1")
+    implementation("androidx.activity:activity:1.9.3")
     kapt ("androidx.room:room-compiler:2.6.1")
     androidTestImplementation ("androidx.room:room-testing:2.6.1" )
 
