@@ -1,3 +1,40 @@
 <resources>
     <string name="app_name">TaskFour</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="welcome_app">Hoş Geldiniz !</string>
+    <string name="coin_name">Bitcoin</string>
+    <string name="error_text">error</string>
+    <string name="coin_symbol">Symbol</string>
+    <string name="market_cap">Piyasa Değeri: %1$s</string>
+    <string name="market_cap_rank">Piyasa Değeri Sıralaması: %1$s</string>
+    <string name="fully_diluted_valuation">Tam Sulandırılmış Değerleme: %1$s</string>
+    <string name="total_volume">Toplam Hacim: %1$s</string>
+    <string name="high_24h">24 Saatlik En Yüksek: %1$s</string>
+    <string name="low_24h">24 Saatlik En Düşük: %1$s</string>
+    <string name="price_change_24h">24 Saatlik Fiyat Değişimi: %1$s</string>
+    <string name="price_change_percentage_24h">24 Saatlik Fiyat Değişim Yüzdesi: %1$s</string>
+    <string name="price_header">543865</string>
+    <string name="high_24h_header">High 24h</string>
+    <string name="low_24h_header">Low 24h</string>
+    <string name="current_price">$%s</string>
+    <string name="search_edit">Search</string>
+    <string name="last_updated_header">Last Updated</string>
+    <string name="crypto_rat">Crypto Rat</string>
+    <string name="email_hint">E-posta</string>
+    <string name="password_hint">Şifre</string>
+    <string name="login_button">Giriş Yap</string>
+    <string name="register_button">Üye Ol</string>
+    <string name="coin_added_success">Coin başarıyla Firestore\'a eklendi.</string>
+    <string name="coin_add_failure">Coin Firestore\'a eklenirken bir hata oluştu: %s</string>
+    <string name="user_not_logged_in">Kullanıcı oturum açmamış, Firestore\'a ekleme işlemi gerçekleştirilemedi.</string>
+    <string name="notification_title">MIUMCOIN SHAKED!</string>
+    <string name="notification_text">Tap to see</string>
+    <string name="channel_name">Channel Name</string>
+    <string name="channel_description">Channel Description</string>
+    <string name="logout_title">Çıkış Yap</string>
+    <string name="logout_message">Çıkış yapmak istiyor musunuz?</string>
+    <string name="my_work_id">my_id</string>
+    <string name="logout_positive_button">Evet</string>
+    <string name="logout_negative_button">Hayır</string>
+
 </resources>

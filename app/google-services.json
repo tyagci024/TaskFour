@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "942910974391",
+    "project_id": "mobilliumcrypto",
+    "storage_bucket": "mobilliumcrypto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:942910974391:android:72d86a7c27753be134a032",
+        "android_client_info": {
+          "package_name": "com.example.taskfour"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzqTB9Q3Rt_JOoryRSPkLMQWbvc_vD0tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
